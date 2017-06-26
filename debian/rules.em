@@ -18,6 +18,10 @@ export PKG_CONFIG_PATH=@(InstallationPrefix)/lib/pkgconfig
 # 	https://github.com/ros-infrastructure/bloom/issues/327
 export DEB_CXXFLAGS_MAINT_APPEND=-DNDEBUG
 
+# Needed to bootstrap since the ros_workspace package which provides the
+# environment setup scripts depends on ament_cmake_core
+export PYTHONPATH=@(InstallationPrefix)/lib/python3.5/site-packages
+
 # Build type specific exports if any.
 @[for var in exportvars]@
 export @(var[0])=@(var[1])
