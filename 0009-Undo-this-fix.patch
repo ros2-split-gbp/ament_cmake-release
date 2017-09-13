@@ -1,7 +1,7 @@
 From 41df7ff72389b431d61a96cfaf536f4db1897862 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
 Date: Wed, 13 Sep 2017 18:33:38 -0400
-Subject: [PATCH 2/2] Undo this fix.
+Subject: [PATCH 09/11] Undo this fix.
 
 ---
  debian/rules | 3 ---

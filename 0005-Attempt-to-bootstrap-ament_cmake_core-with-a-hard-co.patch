@@ -1,7 +1,7 @@
-From 6be2d12cb506722bb999e0d0ae0aa19aa7c30a78 Mon Sep 17 00:00:00 2001
+From ac0f8c8a2e86b52f9acdd83149533c58db1f2b95 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
 Date: Mon, 11 Sep 2017 12:58:34 -0400
-Subject: [PATCH 1/2] Attempt to bootstrap ament_cmake_core with a hard-coded
+Subject: [PATCH 05/11] Attempt to bootstrap ament_cmake_core with a hard-coded
  pythonpath.
 
 ---
