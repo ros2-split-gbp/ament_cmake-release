@@ -1,4 +1,4 @@
-From cf74e2027776a22ba92eedb18b66bdc05cebbf2e Mon Sep 17 00:00:00 2001
+From e49c9eda3997e5c5a820a230b18c75315d38bcf1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
 Date: Wed, 13 Sep 2017 18:36:28 -0400
 Subject: [PATCH] Add pythonpath to template for bootstrapping.
