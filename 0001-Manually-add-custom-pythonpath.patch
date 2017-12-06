@@ -1,4 +1,4 @@
-From 4c8a1eac5b79e4fef3698441a2f3ab9318daf380 Mon Sep 17 00:00:00 2001
+From 14855fed806a1dd236fd961fb37476cb9adf6ae8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
 Date: Tue, 5 Dec 2017 19:58:15 -0800
 Subject: [PATCH] Manually add custom pythonpath.
