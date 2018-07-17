@@ -1,4 +1,4 @@
-From f5c15cd44b6ea3edf52c3ed710cefd07babfba5b Mon Sep 17 00:00:00 2001
+From 9b94f9acce5228666beab4ff4990819cf3368228 Mon Sep 17 00:00:00 2001
 From: Mikael Arguedas <mikael@osrfoundation.org>
 Date: Thu, 14 Jun 2018 07:25:26 +0200
 Subject: [PATCH] Manually add custom pythonpath.
