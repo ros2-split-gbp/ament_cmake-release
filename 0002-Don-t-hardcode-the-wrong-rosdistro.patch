@@ -1,0 +1,25 @@
+From 5c8fb3325a2c96c68cb145331a13ced1b6f1bb59 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
+Date: Wed, 14 Nov 2018 19:34:51 -0800
+Subject: [PATCH 2/2] Don't hardcode the wrong rosdistro...
+
+---
+ debian/rules.em | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/debian/rules.em b/debian/rules.em
+index 016f153..5916912 100755
+--- a/debian/rules.em
++++ b/debian/rules.em
+@@ -19,7 +19,7 @@ export PKG_CONFIG_PATH=@(InstallationPrefix)/lib/pkgconfig
+ export DEB_CXXFLAGS_MAINT_APPEND=-DNDEBUG
+ 
+ # Needed to bootstrap since the ros_workspace package does not yet exist.
+-export PYTHONPATH=/opt/ros/bouncy/lib/python3.6/site-packages
++export PYTHONPATH=@(InstallationPrefix)/lib/python3.6/site-packages
+ 
+ %:
+ 	dh $@@ -v --buildsystem=cmake
+-- 
+2.7.4
+
