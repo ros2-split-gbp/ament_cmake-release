@@ -1,4 +1,4 @@
-From 6c62df6a13cc50de9720bd47829a2c8a4386f123 Mon Sep 17 00:00:00 2001
+From b5990c9a2f8864ab7416bd1bb5cf53b65210c89d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
 Date: Wed, 14 Nov 2018 19:34:51 -0800
 Subject: [PATCH 2/2] Don't hardcode the wrong rosdistro...
