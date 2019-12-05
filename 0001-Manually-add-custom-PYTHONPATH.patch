@@ -1,4 +1,4 @@
-From a06c8c14365f523b528099812931dd87de73b6f8 Mon Sep 17 00:00:00 2001
+From 7e027c7d4d8c0dc6ad010bd7a9fa27f5776e72c2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
 Date: Mon, 8 Apr 2019 15:43:06 -0700
 Subject: [PATCH] Manually add custom PYTHONPATH.
@@ -8,7 +8,7 @@ Subject: [PATCH] Manually add custom PYTHONPATH.
  1 file changed, 3 insertions(+)
 
 diff --git a/debian/rules.em b/debian/rules.em
-index 9c9604d..031f1df 100755
+index 9c9604d9..031f1df4 100755
 --- a/debian/rules.em
 +++ b/debian/rules.em
 @@ -18,6 +18,9 @@ export PKG_CONFIG_PATH=@(InstallationPrefix)/lib/pkgconfig
@@ -22,5 +22,5 @@ index 9c9604d..031f1df 100755
  	dh $@@ -v --buildsystem=cmake
  
 -- 
-2.7.4
+2.17.1
 
