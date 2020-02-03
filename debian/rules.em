@@ -24,7 +24,7 @@ endif
 DEB_HOST_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 
 # Needed to bootstrap since the ros_workspace package does not yet exist.
-export PYTHONPATH=/opt/ros/foxy/lib/python3.6/site-packages
+export PYTHONPATH=/opt/ros/foxy/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.7/site-packages
 
 %:
 	dh $@@ -v --buildsystem=cmake --builddirectory=.obj-$(DEB_HOST_GNU_TYPE)
