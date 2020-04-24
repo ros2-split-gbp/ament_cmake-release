@@ -1,4 +1,4 @@
-# Copyright 2017 Open Source Robotics Foundation, Inc.
+# Copyright 2020 Open Source Robotics Foundation, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,10 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# copied from ament_cmake_pytest/ament_cmake_pytest-extras.cmake
-
-find_package(ament_cmake_test QUIET REQUIRED)
-
-include("${ament_cmake_pytest_DIR}/ament_add_pytest_test.cmake")
-include("${ament_cmake_pytest_DIR}/ament_has_pytest.cmake")
-include("${ament_cmake_pytest_DIR}/ament_get_pytest_cov_version.cmake")
+#
+# Add text labels to the LABELS property of a test.
+#
+# :param testname: the name of the test
+# :type testname: string
+# :param ARGN: a list of labels
+# :type ARGN: list of strings
+#
+# @public
+#
+function(ament_add_test_label testname)
+  get_test_property(${testname} LABELS labels)
+  list(APPEND labels ${ARGN})
+  set_tests_properties(${testname} PROPERTIES LABELS "${labels}")
+endfunction()
