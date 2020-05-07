@@ -1,1 +1,1 @@
-{"base": "8c7bef1e", "parent": "debian/foxy/ament_cmake_export_interfaces", "previous": "8cf7940a", "trim": "", "trimbase": ""}
+{"trim": "", "base": "25fbe70b", "trimbase": "", "parent": "debian/foxy/ament_cmake_export_interfaces", "previous": "8092780b"}
