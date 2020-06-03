@@ -1,4 +1,4 @@
-From ebc0c5590795134e913738c80728b343ef8f9ec8 Mon Sep 17 00:00:00 2001
+From df1971c9f72b65fe8d77e6c2f76bb7050a9139f9 Mon Sep 17 00:00:00 2001
 From: Jacob Perron <jacob@openrobotics.org>
 Date: Thu, 30 Jan 2020 15:37:28 -0800
 Subject: [PATCH 1/2] Migrate patch from Eloquent
@@ -23,5 +23,5 @@ index 9c9604d9..b62e717d 100755
  	dh $@@ -v --buildsystem=cmake
  
 -- 
-2.17.1
+2.25.1
 
