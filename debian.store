@@ -1,1 +1,1 @@
-{"base": "6a912f96", "parent": "debian/foxy/ament_cmake_nose", "previous": "48fa6064", "trim": "", "trimbase": ""}
+{"base": "6e4b012d", "parent": "debian/rolling/ament_cmake_nose", "previous": "0931c39f", "trim": "", "trimbase": ""}
