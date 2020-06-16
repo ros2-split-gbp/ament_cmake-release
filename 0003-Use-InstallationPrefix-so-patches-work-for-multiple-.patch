@@ -1,0 +1,26 @@
+From 3285eca87ea679d2674da85c2349a15c8167438c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
+Date: Tue, 16 Jun 2020 23:08:10 +0000
+Subject: [PATCH 3/3] Use InstallationPrefix so patches work for multiple
+ distros.
+
+---
+ debian/rules.em | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/debian/rules.em b/debian/rules.em
+index b79560e3..8502819a 100755
+--- a/debian/rules.em
++++ b/debian/rules.em
+@@ -19,7 +19,7 @@ export PKG_CONFIG_PATH=@(InstallationPrefix)/lib/pkgconfig
+ export DEB_CXXFLAGS_MAINT_APPEND=-DNDEBUG
+ 
+ # Needed to bootstrap since the ros_workspace package does not yet exist.
+-export PYTHONPATH=/opt/ros/foxy/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.7/site-packages
++export PYTHONPATH=@(InstallationPrefix)/lib/python3.8/site-packages:@(InstallationPrefix)/lib/python3.7/site-packages
+ 
+ %:
+ 	dh $@@ -v --buildsystem=cmake
+-- 
+2.27.0
+
