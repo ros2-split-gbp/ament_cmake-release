@@ -39,21 +39,22 @@ function(ament_environment_hooks)
     get_filename_component(hook_filename "${hook}" NAME)
 
     # check if the file is a template
-    if(hook_filename MATCHES "^(.*)\\.in$")
-      set(is_template TRUE)
-      # cut off .in extension
-      set(hook_filename "${CMAKE_MATCH_1}")
-    else()
-      set(is_template FALSE)
+    string_ends_with("${hook_filename}" ".in" is_template)
+    if(is_template)
+      # cut of .in extension
+      string(LENGTH "${hook_filename}" length)
+      math(EXPR offset "${length} - 3")
+      string(SUBSTRING "${hook_filename}" 0 ${offset} hook_filename)
     endif()
 
-    if(hook_filename MATCHES "^.*\\.([^\\.]+)$")
-      # extract the extension
-      set(hook_extension "${CMAKE_MATCH_1}")
-    else()
+    # extract the extension
+    string(FIND "${hook_filename}" "." index REVERSE)
+    if(index EQUAL -1)
       message(FATAL_ERROR "ament_environment_hooks() called with the hook "
         "'${hook}' which doesn't have a file extension")
     endif()
+    math(EXPR index "${index} + 1")
+    string(SUBSTRING "${hook_filename}" ${index} -1 hook_extension)
 
     if(is_template)
       # expand template
@@ -78,16 +79,5 @@ function(ament_environment_hooks)
       "share/${PROJECT_NAME}/environment/${hook_filename}")
     set(_AMENT_CMAKE_ENVIRONMENT_HOOKS_${hook_extension}
       "${_AMENT_CMAKE_ENVIRONMENT_HOOKS_${hook_extension}}" PARENT_SCOPE)
-
-    get_filename_component(hook_basename "${hook}" NAME_WE)
-    if(DEFINED AMENT_CMAKE_ENVIRONMENT_HOOKS_DESC_${hook_basename})
-      # write .dsv file containing the descriptor of the environment hook
-      set(dsv_file "${CMAKE_BINARY_DIR}/ament_cmake_environment_hooks/${hook_basename}.dsv")
-      file(WRITE "${dsv_file}" "${AMENT_CMAKE_ENVIRONMENT_HOOKS_DESC_${hook_basename}}\n")
-      install(
-        FILES "${dsv_file}"
-        DESTINATION "share/${PROJECT_NAME}/environment"
-      )
-    endif()
   endforeach()
 endfunction()
