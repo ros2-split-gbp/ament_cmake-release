@@ -25,9 +25,13 @@
 # :param PYTHON_EXECUTABLE: absolute path to the executable used to run the test,
 #   default to the CMake variable with the same name returned by FindPythonInterp
 # :type PYTHON_EXECUTABLE: string
+# :param RUNNER: the path to the test runner script (default: see ament_add_test).
+# :type RUNNER: string
 # :param TIMEOUT: the test timeout in seconds,
 #   default defined by ``ament_add_test()``
 # :type TIMEOUT: integer
+# :param WERROR: If ON, then treat warnings as errors. Default: OFF.
+# :type WERROR: bool
 # :param WORKING_DIRECTORY: the working directory for invoking the
 #   command in, default defined by ``ament_add_test()``
 # :type WORKING_DIRECTORY: string
@@ -45,7 +49,7 @@
 function(ament_add_pytest_test testname path)
   cmake_parse_arguments(ARG
     "SKIP_TEST"
-    "PYTHON_EXECUTABLE;TIMEOUT;WORKING_DIRECTORY"
+    "PYTHON_EXECUTABLE;RUNNER;TIMEOUT;WERROR;WORKING_DIRECTORY"
     "APPEND_ENV;APPEND_LIBRARY_DIRS;ENV"
     ${ARGN})
   if(ARG_UNPARSED_ARGUMENTS)
@@ -89,6 +93,53 @@ function(ament_add_pytest_test testname path)
     "--junit-prefix=${PROJECT_NAME}"
   )
 
+  if(ARG_WERROR)
+    # treat warnings as errors
+    list(APPEND cmd "-We")
+  endif()
+
+  # enable pytest coverage by default if the package test_depends on pytest_cov
+  if("python3-pytest-cov" IN_LIST ${PROJECT_NAME}_TEST_DEPENDS)
+    set(coverage_default ON)
+  else()
+    set(coverage_default OFF)
+  endif()
+  option(AMENT_CMAKE_PYTEST_WITH_COVERAGE
+    "Generate coverage information for Python tests"
+    ${coverage_default})
+
+  if(AMENT_CMAKE_PYTEST_WITH_COVERAGE)
+    # get pytest-cov version, if available
+    ament_get_pytest_cov_version(pytest_cov_version
+      PYTHON_EXECUTABLE "${ARG_PYTHON_EXECUTABLE}"
+    )
+    if(NOT pytest_cov_version)
+      message(WARNING
+        "The Python module 'pytest-cov' was not found, test coverage will not be produced "
+        "(e.g. on Ubuntu/Debian install the package 'python3-pytest-cov')")
+    else()
+      set(coverage_directory "${CMAKE_CURRENT_BINARY_DIR}/pytest_cov/${testname}")
+      file(MAKE_DIRECTORY "${coverage_directory}")
+
+      list(APPEND cmd
+        "--cov=${CMAKE_CURRENT_SOURCE_DIR}"
+        "--cov-report=html:${coverage_directory}/coverage.html"
+        "--cov-report=xml:${coverage_directory}/coverage.xml"
+      )
+
+      if(pytest_cov_version VERSION_LESS "2.5.0")
+        message(WARNING
+          "Test coverage will be produced, but will not contain branch coverage information, "
+          "because the pytest extension 'cov' does not support it "
+          "(need 2.5.0, found '${pytest_cov_version}').")
+      else()
+        list(APPEND cmd "--cov-branch")
+      endif()
+
+      list(APPEND ARG_ENV "COVERAGE_FILE=${coverage_directory}/.coverage")
+    endif()
+  endif()
+
   if(ARG_ENV)
     set(ARG_ENV "ENV" ${ARG_ENV})
   endif()
@@ -97,6 +148,9 @@ function(ament_add_pytest_test testname path)
   endif()
   if(ARG_APPEND_LIBRARY_DIRS)
     set(ARG_APPEND_LIBRARY_DIRS "APPEND_LIBRARY_DIRS" ${ARG_APPEND_LIBRARY_DIRS})
+  endif()
+  if(ARG_RUNNER)
+    set(ARG_RUNNER "RUNNER" ${ARG_RUNNER})
   endif()
   if(ARG_TIMEOUT)
     set(ARG_TIMEOUT "TIMEOUT" "${ARG_TIMEOUT}")
@@ -113,6 +167,7 @@ function(ament_add_pytest_test testname path)
     COMMAND ${cmd}
     OUTPUT_FILE "${CMAKE_BINARY_DIR}/ament_cmake_pytest/${testname}.txt"
     RESULT_FILE "${result_file}"
+    ${ARG_RUNNER}
     ${ARG_SKIP_TEST}
     ${ARG_ENV}
     ${ARG_APPEND_ENV}
