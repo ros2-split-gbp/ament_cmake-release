@@ -16,6 +16,9 @@ macro(_ament_cmake_google_benchmark_find_benchmark)
   if(NOT DEFINED _AMENT_CMAKE_GOOGLE_BENCHMARK_FIND_BENCHMARK)
     set(_AMENT_CMAKE_GOOGLE_BENCHMARK_FIND_BENCHMARK TRUE)
 
+    option(AMENT_RUN_PERFORMANCE_TESTS
+      "Enable performance tests instead of unconditionally skipping them" OFF)
+
     find_package(benchmark QUIET)
 
     if(NOT benchmark_FOUND)
@@ -25,6 +28,11 @@ macro(_ament_cmake_google_benchmark_find_benchmark)
         "your system to enable these tests (e.g. on Ubuntu/Debian install the "
         "package 'libbenchmark-dev') or get the ament package "
         "'google_benchmark_vendor'")
+    elseif(NOT AMENT_RUN_PERFORMANCE_TESTS)
+      message(STATUS
+        "Performance tests are disabled by default, so Google Benchmark tests "
+        "will be skipped. To enable these tests, set the CMake variable "
+        "'AMENT_RUN_PERFORMANCE_TESTS'.")
     endif()
   endif()
 endmacro()
