@@ -1,4 +1,4 @@
-From eca972c288aab5f0f7f04005aeec590ba00a5e3a Mon Sep 17 00:00:00 2001
+From 71454d6836eddc6eebdb33486d0624277977d439 Mon Sep 17 00:00:00 2001
 From: Michael Carroll <michael@openrobotics.org>
 Date: Thu, 27 Jun 2019 16:38:34 -0500
 Subject: [PATCH 2/2] Use @(InstallationPrefix) instead of fixed path
