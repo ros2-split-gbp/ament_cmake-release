@@ -1,4 +1,4 @@
-# Copyright 2014 Open Source Robotics Foundation, Inc.
+# Copyright 2020 Open Source Robotics Foundation, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,14 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# copied from
-# ament_cmake_target_dependencies/ament_cmake_target_dependencies-extras.cmake
-
-find_package(ament_cmake_core QUIET REQUIRED)
-find_package(ament_cmake_include_directories QUIET REQUIRED)
-find_package(ament_cmake_libraries QUIET REQUIRED)
-
-include(
-  "${ament_cmake_target_dependencies_DIR}/ament_get_recursive_properties.cmake")
-include(
-  "${ament_cmake_target_dependencies_DIR}/ament_target_dependencies.cmake")
+#
+# Add text labels to the LABELS property of a test.
+#
+# :param testname: the name of the test
+# :type testname: string
+# :param ARGN: a list of labels
+# :type ARGN: list of strings
+#
+# @public
+#
+function(ament_add_test_label testname)
+  get_test_property(${testname} LABELS labels)
+  list(APPEND labels ${ARGN})
+  set_tests_properties(${testname} PROPERTIES LABELS "${labels}")
+endfunction()

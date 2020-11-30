@@ -1,4 +1,4 @@
-# Copyright 2014-2015 Open Source Robotics Foundation, Inc.
+# Copyright 2020 Open Source Robotics Foundation, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,16 +13,16 @@
 # limitations under the License.
 
 #
-# Add a gmock.
+# Add an existing executable using google benchmark as a test.
 #
-# Call add_executable(target ARGN), link it against the gmock library
-# and register the executable as a test.
+# Register an executable created with ament_add_google_benchmark_executable() as
+# a test.
+# If the specified target does not exist the registration is skipped.
 #
 # :param target: the target name which will also be used as the test name
 # :type target: string
-# :param ARGN: the list of source files
-# :type ARGN: list of strings
-# :param RUNNER: the path to the test runner script (default: see ament_add_test).
+# :param RUNNER: the path to the test runner script (default: see
+#   ament_add_test).
 # :type RUNNER: string
 # :param TIMEOUT: the test timeout in seconds,
 #   default defined by ``ament_add_test()``
@@ -30,9 +30,6 @@
 # :param WORKING_DIRECTORY: the working directory for invoking the
 #   executable in, default defined by ``ament_add_test()``
 # :type WORKING_DIRECTORY: string
-# :param SKIP_LINKING_MAIN_LIBRARIES: if set skip linking against the gmock
-#   main libraries
-# :type SKIP_LINKING_MAIN_LIBRARIES: option
 # :param SKIP_TEST: if set mark the test as being skipped
 # :type SKIP_TEST: option
 # :param ENV: list of env vars to set; listed as ``VAR=value``
@@ -46,38 +43,35 @@
 #
 # @public
 #
-macro(ament_add_gmock target)
-  _ament_cmake_gmock_find_gmock()
-  if(GMOCK_FOUND)
-    _ament_add_gmock("${target}" ${ARGN})
+function(ament_add_google_benchmark_test target)
+  if(NOT TARGET ${target})
+    return()
   endif()
-endmacro()
 
-function(_ament_add_gmock target)
   cmake_parse_arguments(ARG
-    "SKIP_LINKING_MAIN_LIBRARIES;SKIP_TEST"
+    "SKIP_TEST"
     "RUNNER;TIMEOUT;WORKING_DIRECTORY"
     "APPEND_ENV;APPEND_LIBRARY_DIRS;ENV"
     ${ARGN})
-  if(NOT ARG_UNPARSED_ARGUMENTS)
+  if(ARG_UNPARSED_ARGUMENTS)
     message(FATAL_ERROR
-      "ament_add_gmock() must be invoked with at least one source file")
+      "ament_add_google_benchmark_test() called with unused arguments: ${ARGN}")
   endif()
 
-  # should be EXCLUDE_FROM_ALL if it would be possible
-  # to add this target as a dependency to the "test" target
-  add_executable("${target}" ${ARG_UNPARSED_ARGUMENTS})
-  target_include_directories("${target}" PUBLIC "${GMOCK_INCLUDE_DIRS}")
-  if(NOT ARG_SKIP_LINKING_MAIN_LIBRARIES)
-    target_link_libraries("${target}" ${GMOCK_MAIN_LIBRARIES})
+  if(AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY AND NOT IS_ABSOLUTE ${AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY})
+    get_filename_component(AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY ${CMAKE_CURRENT_SOURCE_DIR}/${AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY} ABSOLUTE)
+    set(OVERLAY_ARG "--result-file-overlay" "${AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY}")
   endif()
-  target_link_libraries("${target}" ${GMOCK_LIBRARIES})
 
   set(executable "$<TARGET_FILE:${target}>")
-  set(result_file "${AMENT_TEST_RESULTS_DIR}/${PROJECT_NAME}/${target}.gtest.xml")
+  set(benchmark_out "${AMENT_TEST_RESULTS_DIR}/${PROJECT_NAME}/${target}.google_benchmark.json")
+  set(common_out "${AMENT_TEST_RESULTS_DIR}/${PROJECT_NAME}/${target}.benchmark.json")
   set(cmd
-    "${executable}"
-    "--gtest_output=xml:${result_file}")
+    "${PYTHON_EXECUTABLE}" "-u" "${ament_cmake_google_benchmark_DIR}/run_and_convert.py"
+    "${benchmark_out}" "${common_out}" "--package-name" "${PROJECT_NAME}"
+    ${OVERLAY_ARG}
+    "--command" "${executable}"
+    "--benchmark_out_format=json" "--benchmark_out=${benchmark_out}")
   if(ARG_ENV)
     set(ARG_ENV "ENV" ${ARG_ENV})
   endif()
@@ -86,12 +80,6 @@ function(_ament_add_gmock target)
   endif()
   if(ARG_APPEND_LIBRARY_DIRS)
     set(ARG_APPEND_LIBRARY_DIRS "APPEND_LIBRARY_DIRS" ${ARG_APPEND_LIBRARY_DIRS})
-  endif()
-  # Options come out TRUE or FALSE but need to be passed as value or empty
-  if(ARG_SKIP_TEST)
-    set(ARG_SKIP_TEST "SKIP_TEST")
-  else()
-    set(ARG_SKIP_TEST "")
   endif()
   if(ARG_RUNNER)
     set(ARG_RUNNER "RUNNER" ${ARG_RUNNER})
@@ -102,17 +90,19 @@ function(_ament_add_gmock target)
   if(ARG_WORKING_DIRECTORY)
     set(ARG_WORKING_DIRECTORY "WORKING_DIRECTORY" "${ARG_WORKING_DIRECTORY}")
   endif()
+  if(ARG_SKIP_TEST OR NOT AMENT_RUN_PERFORMANCE_TESTS)
+    set(ARG_SKIP_TEST "SKIP_TEST")
+  endif()
 
   ament_add_test(
     "${target}"
     COMMAND ${cmd}
-    OUTPUT_FILE "${CMAKE_BINARY_DIR}/ament_cmake_gmock/${target}.txt"
-    RESULT_FILE "${result_file}"
-    ${ARG_RUNNER}
+    OUTPUT_FILE "${CMAKE_BINARY_DIR}/ament_cmake_google_benchmark/${target}.txt"
+    GENERATE_RESULT_FOR_RETURN_CODE_ZERO
+    ${ARG_SKIP_TEST}
     ${ARG_ENV}
     ${ARG_APPEND_ENV}
     ${ARG_APPEND_LIBRARY_DIRS}
-    ${ARG_SKIP_TEST}
     ${ARG_TIMEOUT}
     ${ARG_WORKING_DIRECTORY}
   )
@@ -120,6 +110,6 @@ function(_ament_add_gmock target)
     "${target}"
     PROPERTIES
     REQUIRED_FILES "${executable}"
-    LABELS "gmock"
+    LABELS "google_benchmark;performance"
   )
 endfunction()
