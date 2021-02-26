@@ -1,4 +1,4 @@
-From 58f664c56d08f6623b68683b02d5702e32ea7cdb Mon Sep 17 00:00:00 2001
+From 56203626160b6887890a0a6d3a0867fad75c7cfb Mon Sep 17 00:00:00 2001
 From: Scott K Logan <logans@cottsay.net>
 Date: Tue, 19 Jan 2021 18:32:45 -0800
 Subject: [PATCH] Bootstrap PYTHONPATH
@@ -9,7 +9,7 @@ Signed-off-by: Scott K Logan <logans@cottsay.net>
  1 file changed, 9 insertions(+)
 
 diff --git a/rpm/template.spec.em b/rpm/template.spec.em
-index c0d00ea8..a8622228 100644
+index f7231506..8f25bc7b 100644
 --- a/rpm/template.spec.em
 +++ b/rpm/template.spec.em
 @@ -31,6 +31,9 @@ Source0:        %{name}-%{version}.tar.gz
