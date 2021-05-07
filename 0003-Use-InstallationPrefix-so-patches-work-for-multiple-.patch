@@ -1,4 +1,4 @@
-From 1a505ddc79fafb09439f0831fd3c86ad1bcda7ee Mon Sep 17 00:00:00 2001
+From 33965b73d9447bc6c4885e0de3cc3e028c1b9ea0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
 Date: Tue, 16 Jun 2020 23:08:10 +0000
 Subject: [PATCH 3/3] Use InstallationPrefix so patches work for multiple
@@ -22,5 +22,5 @@ index 3bbf4ecc..680110b8 100755
  %:
  	dh $@@ -v --buildsystem=cmake
 -- 
-2.30.2
+2.25.1
 
