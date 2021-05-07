@@ -1,4 +1,4 @@
-From 3b6d03516bc3e96dd8b99d5927e4d44754b8ad81 Mon Sep 17 00:00:00 2001
+From 14c4a69ae3aeddaf35d8fc6c4776ac5d10ec1edb Mon Sep 17 00:00:00 2001
 From: Scott K Logan <logans@cottsay.net>
 Date: Tue, 19 Jan 2021 18:32:45 -0800
 Subject: [PATCH] Bootstrap PYTHONPATH
@@ -9,11 +9,11 @@ Signed-off-by: Scott K Logan <logans@cottsay.net>
  1 file changed, 9 insertions(+)
 
 diff --git a/rpm/template.spec.em b/rpm/template.spec.em
-index f7231506..8f25bc7b 100644
+index 836b2af4..4d676f7e 100644
 --- a/rpm/template.spec.em
 +++ b/rpm/template.spec.em
 @@ -31,6 +31,9 @@ Source0:        %{name}-%{version}.tar.gz
- %autosetup
+ %autosetup -p1
  
  %build
 +# Needed to bootstrap since the ros_workspace package does not yet exist.
@@ -43,5 +43,5 @@ index f7231506..8f25bc7b 100644
  TEST_TARGET=$(%__make -qp -C obj-%{_target_platform} | sed "s/^\(test\|check\):.*/\\1/;t f;d;:f;q0")
  if [ -n "$TEST_TARGET" ]; then
 -- 
-2.30.2
+2.25.1
 
