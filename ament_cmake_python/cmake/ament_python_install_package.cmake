@@ -13,19 +13,14 @@
 # limitations under the License.
 
 #
-# Install a Python package (and its recursive subpackages)
+# Install a Python package (and its recursive subpackages).
 #
 # :param package_name: the Python package name
 # :type package_name: string
 # :param PACKAGE_DIR: the path to the Python package directory (default:
 #   <package_name> folder relative to the CMAKE_CURRENT_LIST_DIR)
 # :type PACKAGE_DIR: string
-# :param VERSION: the Python package version (default: package.xml version)
-# :param VERSION: string
-# :param SETUP_CFG: the path to a setup.cfg file (default:
-#   setup.cfg file at CMAKE_CURRENT_LIST_DIR root, if any)
-# :param SETUP_CFG: string
-# :param SKIP_COMPILE: if set do not byte-compile the installed package
+# :param SKIP_COMPILE: if set do not compile the installed package
 # :type SKIP_COMPILE: option
 #
 macro(ament_python_install_package)
@@ -34,7 +29,7 @@ macro(ament_python_install_package)
 endmacro()
 
 function(_ament_cmake_python_install_package package_name)
-  cmake_parse_arguments(ARG "SKIP_COMPILE" "PACKAGE_DIR;VERSION;SETUP_CFG" "" ${ARGN})
+  cmake_parse_arguments(ARG "SKIP_COMPILE" "PACKAGE_DIR" "" ${ARGN})
   if(ARG_UNPARSED_ARGUMENTS)
     message(FATAL_ERROR "ament_python_install_package() called with unused "
       "arguments: ${ARG_UNPARSED_ARGUMENTS}")
@@ -47,88 +42,23 @@ function(_ament_cmake_python_install_package package_name)
     set(ARG_PACKAGE_DIR "${CMAKE_CURRENT_LIST_DIR}/${ARG_PACKAGE_DIR}")
   endif()
 
-  if(NOT ARG_VERSION)
-    # Use package.xml version
-    if(NOT _AMENT_PACKAGE_NAME)
-      ament_package_xml()
-    endif()
-    set(ARG_VERSION "${${PROJECT_NAME}_VERSION}")
-  endif()
-
   if(NOT EXISTS "${ARG_PACKAGE_DIR}/__init__.py")
     message(FATAL_ERROR "ament_python_install_package() the Python package "
       "folder '${ARG_PACKAGE_DIR}' doesn't contain an '__init__.py' file")
   endif()
 
-  if(NOT ARG_SETUP_CFG)
-    if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/setup.cfg")
-      set(ARG_SETUP_CFG "${CMAKE_CURRENT_LIST_DIR}/setup.cfg")
-    endif()
-  elseif(NOT IS_ABSOLUTE "${ARG_SETUP_CFG}")
-    set(ARG_SETUP_CFG "${CMAKE_CURRENT_LIST_DIR}/${ARG_SETUP_CFG}")
-  endif()
+  _ament_cmake_python_register_environment_hook()
 
   if(NOT PYTHON_INSTALL_DIR)
     message(FATAL_ERROR "ament_python_install_package() variable "
       "'PYTHON_INSTALL_DIR' must not be empty")
   endif()
-
-  set(build_dir "${CMAKE_CURRENT_BINARY_DIR}/ament_cmake_python/${package_name}")
-
-  string(CONFIGURE "\
-import os
-from setuptools import find_packages
-from setuptools import setup
-
-setup(
-    name='${package_name}',
-    version='${ARG_VERSION}',
-    packages=find_packages(
-        include=('${package_name}', '${package_name}.*')),
-)
-" setup_py_content)
-
-  file(GENERATE
-    OUTPUT "${build_dir}/setup.py"
-    CONTENT "${setup_py_content}"
-  )
-
-  set(egg_dependencies ament_cmake_python_symlink_${package_name})
-
-  add_custom_target(
-    ament_cmake_python_symlink_${package_name}
-    COMMAND ${CMAKE_COMMAND} -E create_symlink
-    "${ARG_PACKAGE_DIR}" "${build_dir}/${package_name}"
-  )
-
-  if(ARG_SETUP_CFG)
-    add_custom_target(
-      ament_cmake_python_symlink_${package_name}_setup
-      COMMAND ${CMAKE_COMMAND} -E create_symlink
-        "${ARG_SETUP_CFG}" "${build_dir}/setup.cfg"
-    )
-    list(APPEND egg_dependencies ament_cmake_python_symlink_${package_name}_setup)
-  endif()
-
-  add_custom_target(
-    ament_cmake_python_build_${package_name}_egg ALL
-    COMMAND ${PYTHON_EXECUTABLE} setup.py egg_info
-    WORKING_DIRECTORY "${build_dir}"
-    DEPENDS ${egg_dependencies}
-  )
-
-  install(
-    DIRECTORY "${build_dir}/${package_name}.egg-info"
-    DESTINATION "${PYTHON_INSTALL_DIR}/"
-  )
-
   install(
     DIRECTORY "${ARG_PACKAGE_DIR}/"
     DESTINATION "${PYTHON_INSTALL_DIR}/${package_name}"
     PATTERN "*.pyc" EXCLUDE
     PATTERN "__pycache__" EXCLUDE
   )
-
   if(NOT ARG_SKIP_COMPILE)
     # compile Python files
     install(CODE

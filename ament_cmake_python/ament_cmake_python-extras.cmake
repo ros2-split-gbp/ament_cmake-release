@@ -72,4 +72,3 @@ endmacro()
 
 include("${ament_cmake_python_DIR}/ament_python_install_module.cmake")
 include("${ament_cmake_python_DIR}/ament_python_install_package.cmake")
-include("${ament_cmake_python_DIR}/ament_get_python_install_dir.cmake")

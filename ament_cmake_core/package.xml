@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="2">
   <name>ament_cmake_core</name>
-  <version>1.1.4</version>
+  <version>0.9.9</version>
   <description>
     The core of the ament buildsystem in CMake.
 
@@ -14,7 +14,6 @@
     * symlink_install: use symlinks for CMake install commands
   </description>
   <maintainer email="dthomas@osrfoundation.org">Dirk Thomas</maintainer>
-  <maintainer email="michel@ekumenlabs.com">Michel Hidalgo</maintainer>
   <license>Apache License 2.0</license>
 
   <buildtool_depend>cmake</buildtool_depend>
