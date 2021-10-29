@@ -46,13 +46,16 @@
 # :param APPEND_LIBRARY_DIRS: list of library dirs to append to the appropriate
 #   OS specific env var, a la LD_LIBRARY_PATH
 # :type APPEND_LIBRARY_DIRS: list of strings
+# :param SKIP_RETURN_CODE: return code signifying that the test has been
+#   skipped and did not fail OR succeed
+# :type SKIP_RETURN_CODE: integer
 #
 # @public
 #
 function(ament_add_test testname)
   cmake_parse_arguments(ARG
     "GENERATE_RESULT_FOR_RETURN_CODE_ZERO;SKIP_TEST"
-    "OUTPUT_FILE;RESULT_FILE;RUNNER;TIMEOUT;WORKING_DIRECTORY"
+    "OUTPUT_FILE;RESULT_FILE;RUNNER;SKIP_RETURN_CODE;TIMEOUT;WORKING_DIRECTORY"
     "APPEND_ENV;APPEND_LIBRARY_DIRS;COMMAND;ENV"
     ${ARGN})
   if(ARG_UNPARSED_ARGUMENTS)
@@ -80,12 +83,16 @@ function(ament_add_test testname)
     set(ARG_WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
   endif()
 
+  get_executable_path(python_interpreter Python3::Interpreter BUILD)
   # wrap command with run_test script to ensure test result generation
-  set(cmd_wrapper "${PYTHON_EXECUTABLE}" "-u" "${ARG_RUNNER}"
+  set(cmd_wrapper "${python_interpreter}" "-u" "${ARG_RUNNER}"
     "${ARG_RESULT_FILE}"
     "--package-name" "${PROJECT_NAME}")
   if(ARG_SKIP_TEST)
     list(APPEND cmd_wrapper "--skip-test")
+    set(ARG_SKIP_RETURN_CODE 0)
+  elseif(ARG_SKIP_RETURN_CODE)
+    list(APPEND cmd_wrapper "--skip-return-code" "${ARG_SKIP_RETURN_CODE}")
   endif()
   if(ARG_GENERATE_RESULT_FOR_RETURN_CODE_ZERO)
     list(APPEND cmd_wrapper "--generate-result-on-success")
@@ -124,10 +131,10 @@ function(ament_add_test testname)
     "${testname}"
     PROPERTIES TIMEOUT ${ARG_TIMEOUT}
   )
-  if(ARG_SKIP_TEST)
+  if(DEFINED ARG_SKIP_RETURN_CODE)
     set_tests_properties(
       "${testname}"
-      PROPERTIES SKIP_RETURN_CODE 0
+      PROPERTIES SKIP_RETURN_CODE ${ARG_SKIP_RETURN_CODE}
     )
   endif()
 endfunction()
