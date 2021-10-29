@@ -2,6 +2,13 @@
 Changelog for package ament_cmake_auto
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2021-10-29)
+------------------
+* Add ament_auto_add_gtest (`#344 <https://github.com/ament/ament_cmake/issues/344>`_)
+* Use FindPython3 instead of FindPythonInterp (`#355 <https://github.com/ament/ament_cmake/issues/355>`_)
+* Update maintainers (`#336 <https://github.com/ament/ament_cmake/issues/336>`_)
+* Contributors: Chris Lalancette, Joshua Whitley, Shane Loretz
+
 1.1.4 (2021-05-06)
 ------------------
 
