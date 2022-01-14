@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="2">
   <name>ament_cmake_core</name>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
   <description>
     The core of the ament buildsystem in CMake.
 
@@ -13,7 +13,10 @@
     * package_templates: templates from the ament_package Python package
     * symlink_install: use symlinks for CMake install commands
   </description>
+
+  <maintainer email="michael.jeronimo@openrobotics.org">Michael Jeronimo</maintainer>
   <maintainer email="michel@ekumenlabs.com">Michel Hidalgo</maintainer>
+
   <license>Apache License 2.0</license>
 
   <author>Dirk Thomas</author>
