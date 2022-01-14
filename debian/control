@@ -1,0 +1,12 @@
+Source: ros-galactic-ament-cmake-google-benchmark
+Section: misc
+Priority: optional
+Maintainer: Michael Jeronimo <michael.jeronimo@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-galactic-ament-cmake-core, ros-galactic-ament-cmake-export-dependencies, ros-galactic-ament-cmake-python, ros-galactic-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-galactic-ament-cmake-google-benchmark
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-galactic-ament-cmake-test, ros-galactic-google-benchmark-vendor, ros-galactic-ros-workspace
+Description: The ability to add Google Benchmark tests in the ament buildsystem in CMake.
