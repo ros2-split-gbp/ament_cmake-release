@@ -241,7 +241,7 @@ tracks:
       :{release_inc} --os-name rhel
     devel_branch: master
     last_release: master
-    last_version: 1.2.0
+    last_version: 1.2.1
     name: ament_cmake
     patches: null
     release_inc: '1'
