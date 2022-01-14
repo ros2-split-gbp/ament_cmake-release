@@ -2,18 +2,10 @@
 Changelog for package ament_cmake_auto
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.1 (2022-01-14)
+1.1.5 (2022-01-14)
 ------------------
-* Fix typo in ament_auto_find_test_dependencies (`#363 <https://github.com/ament/ament_cmake/issues/363>`_)
-* Update maintainers to Michael Jeronimo and Michel Hidalgo (`#362 <https://github.com/ament/ament_cmake/issues/362>`_)
-* Contributors: Audrow Nash, Daisuke Nishimatsu
-
-1.2.0 (2021-10-29)
-------------------
-* Add ament_auto_add_gtest (`#344 <https://github.com/ament/ament_cmake/issues/344>`_)
-* Use FindPython3 instead of FindPythonInterp (`#355 <https://github.com/ament/ament_cmake/issues/355>`_)
-* Update maintainers (`#336 <https://github.com/ament/ament_cmake/issues/336>`_)
-* Contributors: Chris Lalancette, Joshua Whitley, Shane Loretz
+* Update maintainers (backport `#362 <https://github.com/ament/ament_cmake/issues/362>`_) (`#370 <https://github.com/ament/ament_cmake/issues/370>`_).
+* Contributors: Audrow Nash
 
 1.1.4 (2021-05-06)
 ------------------

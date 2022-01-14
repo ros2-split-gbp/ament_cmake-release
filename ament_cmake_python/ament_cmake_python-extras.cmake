@@ -48,10 +48,9 @@ macro(_ament_cmake_python_get_python_install_dir)
       "import os"
       "print(os.path.relpath(get_python_lib(prefix='${CMAKE_INSTALL_PREFIX}'), start='${CMAKE_INSTALL_PREFIX}').replace(os.sep, '/'))"
     )
-    get_executable_path(_python_interpreter Python3::Interpreter CONFIGURE)
     execute_process(
       COMMAND
-      "${_python_interpreter}"
+      "${PYTHON_EXECUTABLE}"
       "-c"
       "${_python_code}"
       OUTPUT_VARIABLE _output
@@ -60,7 +59,7 @@ macro(_ament_cmake_python_get_python_install_dir)
     )
     if(NOT _result EQUAL 0)
       message(FATAL_ERROR
-        "execute_process(${_python_interpreter} -c '${_python_code}') returned "
+        "execute_process(${PYTHON_EXECUTABLE} -c '${_python_code}') returned "
         "error code ${_result}")
     endif()
 

@@ -2,25 +2,12 @@
 Changelog for package ament_cmake_python
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.1 (2022-01-14)
+1.1.5 (2022-01-14)
 ------------------
-* Resolve various ament_lint linter violations (`#360 <https://github.com/ament/ament_cmake/issues/360>`_)
-  We can't add ament_lint linters in ament_cmake in the traditional way
-  without creating a circular dependency between the repositories. Even
-  though we can't automatically enforce linting, it's still a good idea to
-  try to keep conformance where possible.
-* Update maintainers to Michael Jeronimo and Michel Hidalgo (`#362 <https://github.com/ament/ament_cmake/issues/362>`_)
-* Contributors: Audrow Nash, Scott K Logan
-
-1.2.0 (2021-10-29)
-------------------
-* Make ament_cmake_python symlink for symlink installs only (`#357 <https://github.com/ament/ament_cmake/issues/357>`_)
-* Use FindPython3 instead of FindPythonInterp (`#355 <https://github.com/ament/ament_cmake/issues/355>`_)
-* Make ament_python_install_package() match setuptools' egg names. (`#338 <https://github.com/ament/ament_cmake/issues/338>`_)
-* Drop ament_cmake_python outdated tests. (`#340 <https://github.com/ament/ament_cmake/issues/340>`_)
-* Update maintainers (`#336 <https://github.com/ament/ament_cmake/issues/336>`_)
-* Make ament_python_install_package() install console_scripts (`#328 <https://github.com/ament/ament_cmake/issues/328>`_)
-* Contributors: Chris Lalancette, Michel Hidalgo, Shane Loretz
+* Update maintainers (backport `#362 <https://github.com/ament/ament_cmake/issues/362>`_) (`#370 <https://github.com/ament/ament_cmake/issues/370>`_).
+* Make ament_python_install_package() install console_scripts (`#328 <https://github.com/ament/ament_cmake/issues/328>`_) (`#364 <https://github.com/ament/ament_cmake/issues/364>`_).
+* Make ament_cmake_python symlink for symlink installs only (`#357 <https://github.com/ament/ament_cmake/issues/357>`_) (`#359 <https://github.com/ament/ament_cmake/issues/359>`_).
+* Contributors: Audrow Nash, Daisuke Nishimatsu, G.A. vd. Hoorn, Michel Hidalgo
 
 1.1.4 (2021-05-06)
 ------------------

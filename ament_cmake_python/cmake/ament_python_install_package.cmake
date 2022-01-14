@@ -86,6 +86,7 @@ function(_ament_cmake_python_install_package package_name)
   set(build_dir "${CMAKE_CURRENT_BINARY_DIR}/ament_cmake_python/${package_name}")
 
   string(CONFIGURE "\
+import os
 from setuptools import find_packages
 from setuptools import setup
 
@@ -136,24 +137,16 @@ setup(
     endif()
   endif()
 
-  get_executable_path(python_interpreter Python3::Interpreter BUILD)
-
   add_custom_target(
     ament_cmake_python_build_${package_name}_egg ALL
-    COMMAND ${python_interpreter} setup.py egg_info
+    COMMAND ${PYTHON_EXECUTABLE} setup.py egg_info
     WORKING_DIRECTORY "${build_dir}"
     DEPENDS ${egg_dependencies}
   )
 
-  set(python_version "py${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}")
-
-  set(egg_name "${package_name}")
-  set(egg_install_name "${egg_name}-${ARG_VERSION}")
-  set(egg_install_name "${egg_install_name}-${python_version}")
-
   install(
-    DIRECTORY "${build_dir}/${egg_name}.egg-info/"
-    DESTINATION "${ARG_DESTINATION}/${egg_install_name}.egg-info"
+    DIRECTORY "${build_dir}/${package_name}.egg-info"
+    DESTINATION "${ARG_DESTINATION}/"
   )
 
   if(ARG_SCRIPTS_DESTINATION)
@@ -161,7 +154,7 @@ setup(
 
     add_custom_target(
       ament_cmake_python_build_${package_name}_scripts ALL
-      COMMAND ${python_interpreter} setup.py install_scripts -d scripts
+      COMMAND ${PYTHON_EXECUTABLE} setup.py install_scripts -d scripts
       WORKING_DIRECTORY "${build_dir}"
       DEPENDS ${egg_dependencies}
     )
@@ -186,12 +179,11 @@ setup(
   )
 
   if(NOT ARG_SKIP_COMPILE)
-    get_executable_path(python_interpreter_config Python3::Interpreter CONFIGURE)
     # compile Python files
     install(CODE
       "execute_process(
         COMMAND
-        \"${python_interpreter_config}\" \"-m\" \"compileall\"
+        \"${PYTHON_EXECUTABLE}\" \"-m\" \"compileall\"
         \"${CMAKE_INSTALL_PREFIX}/${ARG_DESTINATION}/${package_name}\"
       )"
     )

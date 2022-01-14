@@ -2,23 +2,10 @@
 Changelog for package ament_cmake_include_directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.2.1 (2022-01-14)
+1.1.5 (2022-01-14)
 ------------------
-* Make ament_include_directories_order a function to allow paths with backslashes on windows. (`#371 <https://github.com/ament/ament_cmake/issues/371>`_)
-  * Repalce backslashes with forward slashes on Windows
-  * Typo
-  * Replace slashes in ARGN
-  * Don't quote
-  * Check ARGN has values before trying to string(REPLACE them
-  * Make ament_include_directories_order a function
-* Update maintainers to Michael Jeronimo and Michel Hidalgo (`#362 <https://github.com/ament/ament_cmake/issues/362>`_)
-* Contributors: Audrow Nash, Shane Loretz
-
-1.2.0 (2021-10-29)
-------------------
-* Use FindPython3 instead of FindPythonInterp (`#355 <https://github.com/ament/ament_cmake/issues/355>`_)
-* Update maintainers (`#336 <https://github.com/ament/ament_cmake/issues/336>`_)
-* Contributors: Chris Lalancette, Shane Loretz
+* Update maintainers (backport `#362 <https://github.com/ament/ament_cmake/issues/362>`_) (`#370 <https://github.com/ament/ament_cmake/issues/370>`_).
+* Contributors: Audrow Nash
 
 1.1.4 (2021-05-06)
 ------------------

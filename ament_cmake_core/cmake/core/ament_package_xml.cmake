@@ -75,13 +75,12 @@ macro(_ament_package_xml dest_dir)
 
   # extract information from package.xml
   file(MAKE_DIRECTORY ${dest_dir})
-  if(NOT TARGET Python3::Interpreter)
+  if(NOT PYTHON_EXECUTABLE)
     message(FATAL_ERROR
-      "ament_package_xml() target 'Python3::Interpreter' must exist")
+      "ament_package_xml() variable 'PYTHON_EXECUTABLE' must not be empty")
   endif()
-  get_executable_path(_python_interpreter Python3::Interpreter CONFIGURE)
   set(_cmd
-    "${_python_interpreter}"
+    "${PYTHON_EXECUTABLE}"
     "${ament_cmake_core_DIR}/core/package_xml_2_cmake.py"
     "${PACKAGE_XML_DIRECTORY}/package.xml"
     "${dest_dir}/package.cmake"

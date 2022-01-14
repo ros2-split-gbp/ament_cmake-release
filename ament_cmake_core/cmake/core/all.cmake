@@ -44,7 +44,6 @@ foreach(filename
   "ament_package_xml"
   "ament_register_extension"
   "assert_file_exists"
-  "get_executable_path"
   "list_append_unique"
   "normalize_path"
   "python"
