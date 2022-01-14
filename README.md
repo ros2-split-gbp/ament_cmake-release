@@ -1,3 +1,47 @@
+## ament_cmake (galactic) - 1.1.5-1
+
+The packages in the `ament_cmake` repository were released into the `galactic` distro by running `/home/steven/osrf/bloom/.direnv/python-3.10.1/bin/bloom-release -r galactic -e ament_cmake --override-release-repository-push-url git@github.com:ros2-gbp/ament_cmake-release` on `Fri, 14 Jan 2022 17:11:18 -0000`
+
+These packages were released:
+- `ament_cmake`
+- `ament_cmake_auto`
+- `ament_cmake_core`
+- `ament_cmake_export_definitions`
+- `ament_cmake_export_dependencies`
+- `ament_cmake_export_include_directories`
+- `ament_cmake_export_interfaces`
+- `ament_cmake_export_libraries`
+- `ament_cmake_export_link_flags`
+- `ament_cmake_export_targets`
+- `ament_cmake_gmock`
+- `ament_cmake_google_benchmark`
+- `ament_cmake_gtest`
+- `ament_cmake_include_directories`
+- `ament_cmake_libraries`
+- `ament_cmake_nose`
+- `ament_cmake_pytest`
+- `ament_cmake_python`
+- `ament_cmake_target_dependencies`
+- `ament_cmake_test`
+- `ament_cmake_version`
+
+Version of package(s) in repository `ament_cmake`:
+
+- upstream repository: https://github.com/ament/ament_cmake.git
+- release repository: https://github.com/ros2-gbp/ament_cmake-release.git
+- rosdistro version: `1.1.4-1`
+- old version: `1.1.4-1`
+- new version: `1.1.5-1`
+
+Versions of tools used:
+
+- bloom version: `0.10.7`
+- catkin_pkg version: `0.4.24`
+- rosdep version: `0.21.0`
+- rosdistro version: `0.8.3`
+- vcstools version: `0.1.42`
+
+
 ## ament_cmake (rolling) - 1.2.1-1
 
 The packages in the `ament_cmake` repository were released into the `rolling` distro by running `/usr/bin/bloom-release -r rolling ament_cmake` on `Fri, 14 Jan 2022 14:16:29 -0000`
