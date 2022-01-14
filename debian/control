@@ -1,0 +1,12 @@
+Source: ros-galactic-ament-cmake
+Section: misc
+Priority: optional
+Maintainer: Michael Jeronimo <michael.jeronimo@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), cmake, ros-galactic-ament-cmake-core, ros-galactic-ament-cmake-export-dependencies, ros-galactic-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-galactic-ament-cmake
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, cmake, ros-galactic-ament-cmake-core, ros-galactic-ament-cmake-export-definitions, ros-galactic-ament-cmake-export-dependencies, ros-galactic-ament-cmake-export-include-directories, ros-galactic-ament-cmake-export-interfaces, ros-galactic-ament-cmake-export-libraries, ros-galactic-ament-cmake-export-link-flags, ros-galactic-ament-cmake-export-targets, ros-galactic-ament-cmake-libraries, ros-galactic-ament-cmake-python, ros-galactic-ament-cmake-target-dependencies, ros-galactic-ament-cmake-test, ros-galactic-ament-cmake-version, ros-galactic-ros-workspace
+Description: The entry point package for the ament buildsystem in CMake.
