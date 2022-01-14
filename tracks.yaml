@@ -166,7 +166,7 @@ tracks:
       :{release_inc} --os-name rhel
     devel_branch: galactic
     last_release: master
-    last_version: 1.1.4
+    last_version: 1.1.5
     name: ament_cmake
     patches: null
     release_inc: '1'
