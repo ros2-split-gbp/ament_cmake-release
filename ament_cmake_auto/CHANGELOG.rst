@@ -2,8 +2,13 @@
 Changelog for package ament_cmake_auto
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.3.0 (2022-02-17)
+------------------
+* Update forthcoming version in changelog
+* Contributors: Audrow Nash
+
+1.2.1 (2022-01-14)
+------------------
 * Fix typo in ament_auto_find_test_dependencies (`#363 <https://github.com/ament/ament_cmake/issues/363>`_)
 * Update maintainers to Michael Jeronimo and Michel Hidalgo (`#362 <https://github.com/ament/ament_cmake/issues/362>`_)
 * Contributors: Audrow Nash, Daisuke Nishimatsu
