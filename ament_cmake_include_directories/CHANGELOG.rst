@@ -2,8 +2,13 @@
 Changelog for package ament_cmake_include_directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.3.0 (2022-02-17)
+------------------
+* Update forthcoming version in changelog
+* Contributors: Audrow Nash
+
+1.2.1 (2022-01-14)
+------------------
 * Make ament_include_directories_order a function to allow paths with backslashes on windows. (`#371 <https://github.com/ament/ament_cmake/issues/371>`_)
   * Repalce backslashes with forward slashes on Windows
   * Typo
