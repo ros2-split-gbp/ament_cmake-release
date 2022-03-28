@@ -2,6 +2,9 @@
 Changelog for package ament_cmake_export_dependencies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.1 (2022-03-28)
+------------------
+
 1.3.0 (2022-02-17)
 ------------------
 * Update forthcoming version in changelog
