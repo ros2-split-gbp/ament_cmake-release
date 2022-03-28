@@ -2,6 +2,9 @@
 Changelog for package ament_cmake_gen_version_h
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.1 (2022-03-28)
+------------------
+
 1.3.0 (2022-02-17)
 ------------------
 * Add ament_generate_version_header and deprecate ament_cmake_gen_version_h (`#377 <https://github.com/ament/ament_cmake/issues/377>`_)
