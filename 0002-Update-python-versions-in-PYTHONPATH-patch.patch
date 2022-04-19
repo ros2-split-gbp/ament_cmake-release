@@ -1,4 +1,4 @@
-From 0e10f1bd3af31b382e11354837042f75f9daeda2 Mon Sep 17 00:00:00 2001
+From cf7efe71c9e170add848d76b7d201fd56641df76 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?= <steven@nuclearsandwich.com>
 Date: Mon, 21 Mar 2022 20:38:10 -0700
 Subject: [PATCH 2/2] Update python versions in PYTHONPATH patch.
@@ -21,5 +21,5 @@ index da2af1ed2..d97f21857 100755
  %:
  	dh $@@ -v --buildsystem=cmake
 -- 
-2.34.1
+2.25.1
 
