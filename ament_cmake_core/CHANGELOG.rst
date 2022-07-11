@@ -2,6 +2,11 @@
 Changelog for package ament_cmake_core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.5.0 (2022-07-11)
+------------------
+* Implement ament_add_default_options (`#390 <https://github.com/ament/ament_cmake/issues/390>`_)
+* Contributors: methylDragon
+
 1.4.0 (2022-04-29)
 ------------------
 
