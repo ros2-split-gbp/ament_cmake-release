@@ -30,9 +30,6 @@
 # :param WORKING_DIRECTORY: the working directory for invoking the
 #   executable in, default defined by ``ament_add_test()``
 # :type WORKING_DIRECTORY: string
-# :param RUN_PARALLEL: if set allow the test to be run in parallel
-#   with other tests
-# :type RUN_PARALLEL: option
 # :param SKIP_TEST: if set mark the test as being skipped
 # :type SKIP_TEST: option
 # :param ENV: list of env vars to set; listed as ``VAR=value``
@@ -52,7 +49,7 @@ function(ament_add_google_benchmark_test target)
   endif()
 
   cmake_parse_arguments(ARG
-    "RUN_PARALLEL;SKIP_TEST"
+    "SKIP_TEST"
     "RUNNER;TIMEOUT;WORKING_DIRECTORY"
     "APPEND_ENV;APPEND_LIBRARY_DIRS;ENV"
     ${ARGN})
@@ -62,18 +59,15 @@ function(ament_add_google_benchmark_test target)
   endif()
 
   if(AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY AND NOT IS_ABSOLUTE ${AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY})
-    get_filename_component(AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY
-      ${CMAKE_CURRENT_SOURCE_DIR}/${AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY} ABSOLUTE)
+    get_filename_component(AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY ${CMAKE_CURRENT_SOURCE_DIR}/${AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY} ABSOLUTE)
     set(OVERLAY_ARG "--result-file-overlay" "${AMENT_CMAKE_GOOGLE_BENCHMARK_OVERLAY}")
   endif()
-
-  get_executable_path(python_interpreter Python3::Interpreter BUILD)
 
   set(executable "$<TARGET_FILE:${target}>")
   set(benchmark_out "${AMENT_TEST_RESULTS_DIR}/${PROJECT_NAME}/${target}.google_benchmark.json")
   set(common_out "${AMENT_TEST_RESULTS_DIR}/${PROJECT_NAME}/${target}.benchmark.json")
   set(cmd
-    "${python_interpreter}" "-u" "${ament_cmake_google_benchmark_DIR}/run_and_convert.py"
+    "${PYTHON_EXECUTABLE}" "-u" "${ament_cmake_google_benchmark_DIR}/run_and_convert.py"
     "${benchmark_out}" "${common_out}" "--package-name" "${PROJECT_NAME}"
     ${OVERLAY_ARG}
     "--command" "${executable}"
@@ -96,9 +90,6 @@ function(ament_add_google_benchmark_test target)
   if(ARG_WORKING_DIRECTORY)
     set(ARG_WORKING_DIRECTORY "WORKING_DIRECTORY" "${ARG_WORKING_DIRECTORY}")
   endif()
-  if(NOT ARG_RUN_PARALLEL)
-    set(PROP_RUN_SERIAL "RUN_SERIAL" "TRUE")
-  endif()
   if(ARG_SKIP_TEST OR NOT AMENT_RUN_PERFORMANCE_TESTS)
     set(ARG_SKIP_TEST "SKIP_TEST")
   endif()
@@ -120,6 +111,5 @@ function(ament_add_google_benchmark_test target)
     PROPERTIES
     REQUIRED_FILES "${executable}"
     LABELS "google_benchmark;performance"
-    ${PROP_RUN_SERIAL}
   )
 endfunction()

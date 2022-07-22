@@ -13,9 +13,10 @@
 # limitations under the License.
 
 # extract information from ament_package.templates
-if(NOT TARGET Python3::Interpreter)
+if(NOT PYTHON_EXECUTABLE)
   message(FATAL_ERROR
-    "ament_cmake_package_templates: target 'Python3::Interpreter' must exist")
+    "ament_cmake_package_templates: variable 'PYTHON_EXECUTABLE' must not be "
+    "empty")
 endif()
 
 # stamp script to generate CMake code
@@ -26,9 +27,8 @@ stamp("${_generator}")
 # invoke generator script
 set(_generated_file
   "${CMAKE_CURRENT_BINARY_DIR}/ament_cmake_package_templates/templates.cmake")
-get_executable_path(_python_interpreter Python3::Interpreter CONFIGURE)
 set(_cmd
-  "${_python_interpreter}"
+  "${PYTHON_EXECUTABLE}"
   "${_generator}"
   "${_generated_file}"
 )

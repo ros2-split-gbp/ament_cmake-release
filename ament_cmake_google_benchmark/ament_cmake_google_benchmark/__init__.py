@@ -74,9 +74,7 @@ def main(argv=sys.argv[1:]):
     args = parser.parse_args(argv)
     args.command = command
 
-    print('Executing benchmark test command: %s\n\n' % ' '.join(args.command))
     res = subprocess.run(args.command)
-    print('\n\nTest command returned result status %d' % res.returncode)
 
     try:
         with open(args.result_file_in, 'r') as in_file:
@@ -96,17 +94,7 @@ def main(argv=sys.argv[1:]):
         open(args.result_file_out, 'w').close()
         return res.returncode
 
-    try:
-        in_data = json.loads(in_text)
-    except json.decoder.JSONDecodeError as e:
-        print(
-            'Failure parsing performance results file at: %s' % args.result_file_in,
-            file=sys.stderr)
-        print(e)
-        if res.returncode == 0:
-            res.returncode = 1
-        return res.returncode
-
+    in_data = json.loads(in_text)
     overlay_data = None
     if args.result_file_overlay:
         with open(args.result_file_overlay, 'r') as overlay_file:
@@ -115,10 +103,6 @@ def main(argv=sys.argv[1:]):
         in_data, overlay_data, args.package_name)
     with open(args.result_file_out, 'w') as out_file:
         json.dump(out_data, out_file)
-
-    if res.returncode == 0 and any(
-            b.get('error_occurred') for b in in_data.get('benchmarks', [])):
-        res.returncode = 1
 
     return res.returncode
 
@@ -164,12 +148,7 @@ def convert_aggregate_benchmark(in_data):
         },
     }
 
-    value_override = None
-    if in_data.get('error_occurred', False):
-        value_override = 'failure'
-
-    out_data.update(convert_extra_metrics(
-        in_data, common_aggregate_test_properties, value_override))
+    out_data.update(convert_extra_metrics(in_data, common_aggregate_test_properties))
 
     return out_data
 
@@ -185,37 +164,25 @@ def convert_iteration_benchmark(in_data):
             },
         },
         'cpu_time': {
+            'dblValue': in_data['cpu_time'],
             'unit': in_data['time_unit'],
         },
         'real_time': {
+            'dblValue': in_data['real_time'],
             'unit': in_data['time_unit'],
         },
     }
 
-    value_override = None
-    if in_data.get('error_occurred', False):
-        value_override = 'failure'
-        out_data['cpu_time']['value'] = value_override
-        out_data['real_time']['value'] = value_override
-    else:
-        out_data['cpu_time']['dblValue'] = in_data['cpu_time']
-        out_data['real_time']['dblValue'] = in_data['real_time']
-
-    out_data.update(convert_extra_metrics(
-        in_data, common_iteration_test_properties, value_override))
+    out_data.update(convert_extra_metrics(in_data, common_iteration_test_properties))
 
     return out_data
 
 
-def convert_extra_metrics(in_data, properties_to_ignore, value_override=None):
+def convert_extra_metrics(in_data, properties_to_ignore):
     for k, v in in_data.items():
         if k in properties_to_ignore:
             continue
-        if value_override:
-            yield k, {
-                'value': value_override,
-            }
-        elif isinstance(v, bool):
+        if isinstance(v, bool):
             yield k, {
                 'boolValue': 'true' if v else 'false',
             }

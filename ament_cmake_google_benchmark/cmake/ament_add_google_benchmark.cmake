@@ -34,9 +34,6 @@
 # :param WORKING_DIRECTORY: the working directory for invoking the
 #   executable in, default defined by ``ament_add_test()``
 # :type WORKING_DIRECTORY: string
-# :param RUN_PARALLEL: if set allow the test to be run in parallel
-#   with other tests
-# :type RUN_PARALLEL: option
 # :param SKIP_LINKING_MAIN_LIBRARIES: if set skip linking against the google
 #   benchmark main libraries
 # :type SKIP_LINKING_MAIN_LIBRARIES: option
@@ -55,7 +52,7 @@
 #
 macro(ament_add_google_benchmark target)
   cmake_parse_arguments(_ARG
-    "RUN_PARALLEL;SKIP_LINKING_MAIN_LIBRARIES;SKIP_TEST"
+    "SKIP_LINKING_MAIN_LIBRARIES;SKIP_TEST"
     "RUNNER;TIMEOUT;WORKING_DIRECTORY"
     "APPEND_ENV;APPEND_LIBRARY_DIRS;ENV"
     ${ARGN})
@@ -82,9 +79,6 @@ macro(ament_add_google_benchmark target)
   endif()
   if(_ARG_WORKING_DIRECTORY)
     list(APPEND _argn_test "WORKING_DIRECTORY" "${_ARG_WORKING_DIRECTORY}")
-  endif()
-  if(_ARG_RUN_PARALLEL)
-    list(APPEND _argn_test "RUN_PARALLEL")
   endif()
   if(_ARG_SKIP_TEST)
     list(APPEND _argn_test "SKIP_TEST")
