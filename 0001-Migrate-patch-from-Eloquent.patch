@@ -1,4 +1,4 @@
-From 6d6996a8297b630f29eeec60e77d532c528ef5b8 Mon Sep 17 00:00:00 2001
+From 779528b0910fe05236bd3ffae6f87ecd7ddc5214 Mon Sep 17 00:00:00 2001
 From: Jacob Perron <jacob@openrobotics.org>
 Date: Thu, 30 Jan 2020 15:37:28 -0800
 Subject: [PATCH 1/2] Migrate patch from Eloquent
