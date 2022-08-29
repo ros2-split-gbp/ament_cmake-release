@@ -1,3 +1,47 @@
+## ament_cmake (foxy) - 0.9.11-1
+
+The packages in the `ament_cmake` repository were released into the `foxy` distro by running `/usr/bin/bloom-release -r foxy ament_cmake` on `Mon, 29 Aug 2022 17:05:03 -0000`
+
+These packages were released:
+- `ament_cmake`
+- `ament_cmake_auto`
+- `ament_cmake_core`
+- `ament_cmake_export_definitions`
+- `ament_cmake_export_dependencies`
+- `ament_cmake_export_include_directories`
+- `ament_cmake_export_interfaces`
+- `ament_cmake_export_libraries`
+- `ament_cmake_export_link_flags`
+- `ament_cmake_export_targets`
+- `ament_cmake_gmock`
+- `ament_cmake_google_benchmark`
+- `ament_cmake_gtest`
+- `ament_cmake_include_directories`
+- `ament_cmake_libraries`
+- `ament_cmake_nose`
+- `ament_cmake_pytest`
+- `ament_cmake_python`
+- `ament_cmake_target_dependencies`
+- `ament_cmake_test`
+- `ament_cmake_version`
+
+Version of package(s) in repository `ament_cmake`:
+
+- upstream repository: https://github.com/ament/ament_cmake.git
+- release repository: https://github.com/ros2-gbp/ament_cmake-release.git
+- rosdistro version: `0.9.10-1`
+- old version: `0.9.10-1`
+- new version: `0.9.11-1`
+
+Versions of tools used:
+
+- bloom version: `0.11.2`
+- catkin_pkg version: `0.5.2`
+- rosdep version: `0.22.1`
+- rosdistro version: `0.9.0`
+- vcstools version: `0.1.42`
+
+
 ## ament_cmake (foxy) - 0.9.10-1
 
 The packages in the `ament_cmake` repository were released into the `foxy` distro by running `/usr/bin/bloom-release -r foxy ament_cmake` on `Fri, 22 Jul 2022 22:56:21 -0000`
