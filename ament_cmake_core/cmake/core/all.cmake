@@ -39,11 +39,13 @@ endif()
 
 # various functions / macros
 foreach(filename
+  "ament_add_default_options"
   "ament_execute_extensions"
   "ament_package"
   "ament_package_xml"
   "ament_register_extension"
   "assert_file_exists"
+  "get_executable_path"
   "list_append_unique"
   "normalize_path"
   "python"

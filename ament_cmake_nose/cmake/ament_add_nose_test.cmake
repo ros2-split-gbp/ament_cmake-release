@@ -22,8 +22,8 @@
 # :type path: string
 # :param SKIP_TEST: if set mark the test as being skipped
 # :type SKIP_TEST: option
-# :param PYTHON_EXECUTABLE: absolute path to the executable used to run the test,
-#   default to the CMake variable with the same name returned by FindPythonInterp
+# :param PYTHON_EXECUTABLE: Python executable used to run the test.
+#   It defaults to the CMake executable target Python3::Interpreter.
 # :type PYTHON_EXECUTABLE: string
 # :param RUNNER: the path to the test runner script (default: see ament_add_test).
 # :type RUNNER: string
@@ -72,8 +72,10 @@ function(_ament_add_nose_test testname path)
       "ament_add_nose_test() the path '${path}' does not exist")
   endif()
   if(NOT ARG_PYTHON_EXECUTABLE)
-    set(ARG_PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE}")
+    set(ARG_PYTHON_EXECUTABLE Python3::Interpreter)
   endif()
+
+  get_executable_path(python_interpreter "${ARG_PYTHON_EXECUTABLE}" BUILD)
 
   set(result_file "${AMENT_TEST_RESULTS_DIR}/${PROJECT_NAME}/${testname}.xunit.xml")
   # Invoke ${NOSETESTS} explicitly with the ${PYTHON_EXECUTABLE} because on
@@ -86,7 +88,7 @@ function(_ament_add_nose_test testname path)
   # ${NOSETESTS} executable references.
   # See: https://github.com/ament/ament_cmake/pull/70
   set(cmd
-    "${ARG_PYTHON_EXECUTABLE}"
+    "${python_interpreter}"
     "-u"  # unbuffered stdout and stderr
     "${NOSETESTS}" "${path}"
     "--nocapture"  # stdout will be printed immediately
