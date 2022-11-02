@@ -2,6 +2,11 @@
 Changelog for package ament_cmake_auto
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.5.2 (2022-11-02)
+------------------
+* Rolling: ament_cmake_auto should include dependencies as SYSTEM (`#385 <https://github.com/ament/ament_cmake/issues/385>`_)
+* Contributors: Joshua Whitley
+
 1.5.1 (2022-09-13)
 ------------------
 
