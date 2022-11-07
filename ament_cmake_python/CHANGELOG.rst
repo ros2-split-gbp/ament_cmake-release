@@ -2,19 +2,13 @@
 Changelog for package ament_cmake_python
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.5.2 (2022-11-02)
+1.3.3 (2022-11-07)
 ------------------
 
-1.5.1 (2022-09-13)
+1.3.2 (2022-05-17)
 ------------------
-
-1.5.0 (2022-07-11)
-------------------
-* Document ament_cmake_python (`#387 <https://github.com/ament/ament_cmake/issues/387>`_)
-* Contributors: Shane Loretz
-
-1.4.0 (2022-04-29)
-------------------
+* Document ament_cmake_python (`#387 <https://github.com/ament/ament_cmake/issues/387>`_) (`#388 <https://github.com/ament/ament_cmake/issues/388>`_)
+* Contributors: mergify[bot]
 
 1.3.1 (2022-03-28)
 ------------------
