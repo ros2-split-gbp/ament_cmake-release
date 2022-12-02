@@ -1,4 +1,4 @@
-From 6446a3c1eee51221637016b60a558d52926fe358 Mon Sep 17 00:00:00 2001
+From 24b3cf2a7a4c3d6dfa531ad2631661cd8485f2a6 Mon Sep 17 00:00:00 2001
 From: Scott K Logan <logans@cottsay.net>
 Date: Tue, 19 Jan 2021 18:32:45 -0800
 Subject: [PATCH] Bootstrap PYTHONPATH
@@ -9,10 +9,10 @@ Signed-off-by: Scott K Logan <logans@cottsay.net>
  1 file changed, 9 insertions(+)
 
 diff --git a/rpm/template.spec.em b/rpm/template.spec.em
-index 836b2af4f..4d676f7e1 100644
+index bebb96b6a..b85c9f3bd 100644
 --- a/rpm/template.spec.em
 +++ b/rpm/template.spec.em
-@@ -31,6 +31,9 @@ Source0:        %{name}-%{version}.tar.gz
+@@ -34,6 +34,9 @@ Source0:        %{name}-%{version}.tar.gz
  %autosetup -p1
  
  %build
@@ -22,7 +22,7 @@ index 836b2af4f..4d676f7e1 100644
  # In case we're installing to a non-standard location, look for a setup.sh
  # in the install tree and source it.  It will set things like
  # CMAKE_PREFIX_PATH, PKG_CONFIG_PATH, and PYTHONPATH.
-@@ -51,6 +54,9 @@ mkdir -p obj-%{_target_platform} && cd obj-%{_target_platform}
+@@ -57,6 +60,9 @@ mkdir -p .obj-%{_target_platform} && cd .obj-%{_target_platform}
  %make_build
  
  %install
@@ -32,7 +32,7 @@ index 836b2af4f..4d676f7e1 100644
  # In case we're installing to a non-standard location, look for a setup.sh
  # in the install tree and source it.  It will set things like
  # CMAKE_PREFIX_PATH, PKG_CONFIG_PATH, and PYTHONPATH.
-@@ -59,6 +65,9 @@ if [ -f "@(InstallationPrefix)/setup.sh" ]; then . "@(InstallationPrefix)/setup.
+@@ -65,6 +71,9 @@ if [ -f "@(InstallationPrefix)/setup.sh" ]; then . "@(InstallationPrefix)/setup.
  
  %if 0%{?with_tests}
  %check
@@ -40,8 +40,8 @@ index 836b2af4f..4d676f7e1 100644
 +export PYTHONPATH=@(InstallationPrefix)/lib/python%{python3_version}/site-packages
 +
  # Look for a Makefile target with a name indicating that it runs tests
- TEST_TARGET=$(%__make -qp -C obj-%{_target_platform} | sed "s/^\(test\|check\):.*/\\1/;t f;d;:f;q0")
+ TEST_TARGET=$(%__make -qp -C .obj-%{_target_platform} | sed "s/^\(test\|check\):.*/\\1/;t f;d;:f;q0")
  if [ -n "$TEST_TARGET" ]; then
 -- 
-2.34.1
+2.38.1
 
