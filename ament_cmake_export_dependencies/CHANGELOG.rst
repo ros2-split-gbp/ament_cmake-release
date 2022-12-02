@@ -2,35 +2,13 @@
 Changelog for package ament_cmake_export_dependencies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.3 (2022-11-07)
+1.1.6 (2022-12-02)
 ------------------
 
-1.3.2 (2022-05-17)
+1.1.5 (2022-01-14)
 ------------------
-
-1.3.1 (2022-03-28)
-------------------
-
-1.3.0 (2022-02-17)
-------------------
-* Update forthcoming version in changelog
+* Update maintainers (backport `#362 <https://github.com/ament/ament_cmake/issues/362>`_) (`#370 <https://github.com/ament/ament_cmake/issues/370>`_).
 * Contributors: Audrow Nash
-
-1.2.1 (2022-01-14)
-------------------
-* Resolve various ament_lint linter violations (`#360 <https://github.com/ament/ament_cmake/issues/360>`_)
-  We can't add ament_lint linters in ament_cmake in the traditional way
-  without creating a circular dependency between the repositories. Even
-  though we can't automatically enforce linting, it's still a good idea to
-  try to keep conformance where possible.
-* Update maintainers to Michael Jeronimo and Michel Hidalgo (`#362 <https://github.com/ament/ament_cmake/issues/362>`_)
-* Contributors: Audrow Nash, Scott K Logan
-
-1.2.0 (2021-10-29)
-------------------
-* Use FindPython3 instead of FindPythonInterp (`#355 <https://github.com/ament/ament_cmake/issues/355>`_)
-* Update maintainers (`#336 <https://github.com/ament/ament_cmake/issues/336>`_)
-* Contributors: Chris Lalancette, Shane Loretz
 
 1.1.4 (2021-05-06)
 ------------------

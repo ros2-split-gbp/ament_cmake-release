@@ -2,32 +2,18 @@
 Changelog for package ament_cmake_export_targets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.3 (2022-11-07)
+1.1.6 (2022-12-02)
 ------------------
-* Support new target export template introduced with CMake 3.24 (`#395 <https://github.com/ament/ament_cmake/issues/395>`_) (`#397 <https://github.com/ament/ament_cmake/issues/397>`_)
+* Support new target export template introduced with CMake 3.24 (`#395 <https://github.com/ament/ament_cmake/issues/395>`_) (`#398 <https://github.com/ament/ament_cmake/issues/398>`_)
+  (cherry picked from commit ca8c26ea3c89e69c0c636b7cd0c088674c689f5f)
+  Co-authored-by: Timo Röhling <timo@gaussglocke.de>
 * Contributors: mergify[bot]
 
-1.3.2 (2022-05-17)
+1.1.5 (2022-01-14)
 ------------------
-
-1.3.1 (2022-03-28)
-------------------
-
-1.3.0 (2022-02-17)
-------------------
-* Update forthcoming version in changelog
+* Update maintainers (backport `#362 <https://github.com/ament/ament_cmake/issues/362>`_) (`#370 <https://github.com/ament/ament_cmake/issues/370>`_).
 * Contributors: Audrow Nash
 
-1.2.1 (2022-01-14)
-------------------
-* Update maintainers to Michael Jeronimo and Michel Hidalgo (`#362 <https://github.com/ament/ament_cmake/issues/362>`_)
-* Contributors: Audrow Nash
-
-1.2.0 (2021-10-29)
-------------------
-* Use FindPython3 instead of FindPythonInterp (`#355 <https://github.com/ament/ament_cmake/issues/355>`_)
-* Update maintainers (`#336 <https://github.com/ament/ament_cmake/issues/336>`_)
-* Contributors: Chris Lalancette, Shane Loretz
 
 1.1.4 (2021-05-06)
 ------------------
@@ -72,7 +58,7 @@ Changelog for package ament_cmake_export_targets
 
 0.9.3 (2020-05-19)
 ------------------
-* Fix the order in which Export.cmake files are included (`#256 <https://github.com/ament/ament_cmake/issues/256>`_)
+* Fix the order in which *Export.cmake files are included (`#256 <https://github.com/ament/ament_cmake/issues/256>`_)
 * Contributors: Ivan Santiago Paunovic
 
 0.9.2 (2020-05-07)

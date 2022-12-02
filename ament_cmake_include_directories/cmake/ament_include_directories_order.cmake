@@ -22,12 +22,16 @@
 #
 # @public
 #
-function(ament_include_directories_order var)
-  set(prefixes "$ENV{AMENT_PREFIX_PATH}")
+macro(ament_include_directories_order var)
+  set(_ament_prefix_path_list "$ENV{AMENT_PREFIX_PATH}")
   if(NOT WIN32)
-    string(REPLACE ":" ";" prefixes "${prefixes}")
+    string(REPLACE ":" ";" _ament_prefix_path_list "${_ament_prefix_path_list}")
   endif()
+  _ament_include_directories_order(${var} "${_ament_prefix_path_list}" ${ARGN})
+endmacro()
 
+
+function(_ament_include_directories_order var prefixes)
   # create list of empty slots, one per prefix and one for unknown prefixes
   list(LENGTH prefixes prefix_count)
   foreach(index RANGE ${prefix_count})
