@@ -277,5 +277,4 @@ tracks:
     ros_distro: rolling
     vcs_type: git
     vcs_uri: https://github.com/ament/ament_cmake.git
-    version: 1.5.3
-    version_saved: :{auto}
+    version: :{auto}
