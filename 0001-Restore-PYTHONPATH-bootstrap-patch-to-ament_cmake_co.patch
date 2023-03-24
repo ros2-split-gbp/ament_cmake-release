@@ -1,0 +1,32 @@
+From 6d033b36ea1d6a8cd013d240aeef90b4f797a762 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?=
+ <nuclearsandwich@users.noreply.github.com>
+Date: Thu, 10 Feb 2022 15:07:13 -0500
+Subject: [PATCH] Restore PYTHONPATH bootstrap patch to ament_cmake_core.
+
+This patch was previously applied to the debian templates for this package to facilitate finding the ROS installation prefix's python libraries without the ros_bootstrap package since this is a required dependency of ros_bootstrap.
+
+The rosdistro migration tools[1] ought to have preserved these patches however I suspect that behavior is not working correctly when the source and destination distribution are the same.
+
+[1]: https://github.com/ros/rosdistro/tree/master/migration-tools
+---
+ debian/rules.em | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/debian/rules.em b/debian/rules.em
+index 2ab7b14af..5094c81cb 100755
+--- a/debian/rules.em
++++ b/debian/rules.em
+@@ -23,6 +23,9 @@ endif
+ 
+ DEB_HOST_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+ 
++# Needed to bootstrap since the ros_workspace package does not yet exist.
++export PYTHONPATH=@(InstallationPrefix)/lib/python3.9/site-packages:@(InstallationPrefix)/lib/python3.8/site-packages:@(InstallationPrefix)/lib/python3.7/site-packages
++
+ %:
+ 	dh $@@ -v --buildsystem=cmake --builddirectory=.obj-$(DEB_HOST_GNU_TYPE)
+ 
+-- 
+2.39.2
+
