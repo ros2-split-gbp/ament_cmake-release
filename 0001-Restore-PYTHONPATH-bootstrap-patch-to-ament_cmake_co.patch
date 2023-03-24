@@ -1,0 +1,52 @@
+From 4c96e2ef205b15c22e6f857f275fd97d0472c0ed Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Steven!=20Ragnar=C3=B6k?=
+ <nuclearsandwich@users.noreply.github.com>
+Date: Thu, 10 Feb 2022 14:31:35 -0500
+Subject: [PATCH] Restore PYTHONPATH bootstrap patch to ament_cmake_core.
+
+This patch was previously applied to the rpm spec template for this package to facilitate finding the ROS installation prefix's python libraries without the ros_bootstrap package since this is a required dependency of ros_bootstrap.
+
+The rosdistro migration tools[1] ought to have preserved these patches however I suspect that behavior is not working correctly when the source and destination distribution are the same.
+
+[1]: https://github.com/ros/rosdistro/tree/master/migration-tools
+---
+ rpm/template.spec.em | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/rpm/template.spec.em b/rpm/template.spec.em
+index bebb96b6a..b85c9f3bd 100644
+--- a/rpm/template.spec.em
++++ b/rpm/template.spec.em
+@@ -34,6 +34,9 @@ Source0:        %{name}-%{version}.tar.gz
+ %autosetup -p1
+ 
+ %build
++# Needed to bootstrap since the ros_workspace package does not yet exist.
++export PYTHONPATH=@(InstallationPrefix)/lib/python%{python3_version}/site-packages
++
+ # In case we're installing to a non-standard location, look for a setup.sh
+ # in the install tree and source it.  It will set things like
+ # CMAKE_PREFIX_PATH, PKG_CONFIG_PATH, and PYTHONPATH.
+@@ -57,6 +60,9 @@ mkdir -p .obj-%{_target_platform} && cd .obj-%{_target_platform}
+ %make_build
+ 
+ %install
++# Needed to bootstrap since the ros_workspace package does not yet exist.
++export PYTHONPATH=@(InstallationPrefix)/lib/python%{python3_version}/site-packages
++
+ # In case we're installing to a non-standard location, look for a setup.sh
+ # in the install tree and source it.  It will set things like
+ # CMAKE_PREFIX_PATH, PKG_CONFIG_PATH, and PYTHONPATH.
+@@ -65,6 +71,9 @@ if [ -f "@(InstallationPrefix)/setup.sh" ]; then . "@(InstallationPrefix)/setup.
+ 
+ %if 0%{?with_tests}
+ %check
++# Needed to bootstrap since the ros_workspace package does not yet exist.
++export PYTHONPATH=@(InstallationPrefix)/lib/python%{python3_version}/site-packages
++
+ # Look for a Makefile target with a name indicating that it runs tests
+ TEST_TARGET=$(%__make -qp -C .obj-%{_target_platform} | sed "s/^\(test\|check\):.*/\\1/;t f;d;:f;q0")
+ if [ -n "$TEST_TARGET" ]; then
+-- 
+2.39.2
+
