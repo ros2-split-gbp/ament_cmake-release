@@ -2,6 +2,9 @@
 Changelog for package ament_cmake_include_directories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.0 (2023-04-11)
+------------------
+
 1.5.3 (2023-02-13)
 ------------------
 * [rolling] Update maintainers - 2022-11-07 (`#411 <https://github.com/ament/ament_cmake/issues/411>`_)
