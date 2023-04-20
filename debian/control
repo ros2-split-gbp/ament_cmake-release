@@ -1,0 +1,12 @@
+Source: ros-iron-ament-cmake-auto
+Section: misc
+Priority: optional
+Maintainer: Michael Jeronimo <michael.jeronimo@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-iron-ament-cmake, ros-iron-ament-cmake-gtest, ros-iron-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-iron-ament-cmake-auto
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-iron-ament-cmake, ros-iron-ament-cmake-gtest, ros-iron-ros-workspace
+Description: The auto-magic functions for ease to use of the ament buildsystem in CMake.
