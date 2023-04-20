@@ -1,0 +1,12 @@
+Source: ros-iron-ament-cmake
+Section: misc
+Priority: optional
+Maintainer: Michael Jeronimo <michael.jeronimo@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), cmake, ros-iron-ament-cmake-core, ros-iron-ament-cmake-export-dependencies, ros-iron-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-iron-ament-cmake
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, cmake, ros-iron-ament-cmake-core, ros-iron-ament-cmake-export-definitions, ros-iron-ament-cmake-export-dependencies, ros-iron-ament-cmake-export-include-directories, ros-iron-ament-cmake-export-interfaces, ros-iron-ament-cmake-export-libraries, ros-iron-ament-cmake-export-link-flags, ros-iron-ament-cmake-export-targets, ros-iron-ament-cmake-gen-version-h, ros-iron-ament-cmake-libraries, ros-iron-ament-cmake-python, ros-iron-ament-cmake-target-dependencies, ros-iron-ament-cmake-test, ros-iron-ament-cmake-version, ros-iron-ros-workspace
+Description: The entry point package for the ament buildsystem in CMake.
