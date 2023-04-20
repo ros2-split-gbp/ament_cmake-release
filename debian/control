@@ -1,0 +1,12 @@
+Source: ros-iron-ament-cmake-vendor-package
+Section: misc
+Priority: optional
+Maintainer: Michael Jeronimo <michael.jeronimo@openrobotics.org>
+Build-Depends: debhelper (>= 9.0.0), ros-iron-ament-cmake-core, ros-iron-ament-cmake-export-dependencies, ros-iron-ament-cmake-test <!nocheck>, ros-iron-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-iron-ament-cmake-vendor-package
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, git, ros-iron-ament-cmake-core, ros-iron-ament-cmake-export-dependencies, ros-iron-ros-workspace
+Description: Macros for maintaining a 'vendor' package.
