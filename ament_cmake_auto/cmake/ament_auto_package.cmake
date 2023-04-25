@@ -67,17 +67,9 @@ macro(ament_auto_package)
 
   # export and install all libraries
   if(NOT ${PROJECT_NAME}_LIBRARIES STREQUAL "")
-    set(without_interfaces "")
-    foreach(library_name ${${PROJECT_NAME}_LIBRARIES})
-      get_target_property(library_type ${library_name} TYPE)
-      if(NOT "${library_type}" STREQUAL "INTERFACE_LIBRARY")
-        list(APPEND without_interfaces ${library_name})
-      endif()
-    endforeach()
-
-    ament_export_libraries(${without_interfaces})
+    ament_export_libraries(${${PROJECT_NAME}_LIBRARIES})
     install(
-      TARGETS ${without_interfaces}
+      TARGETS ${${PROJECT_NAME}_LIBRARIES}
       ARCHIVE DESTINATION lib
       LIBRARY DESTINATION lib
       RUNTIME DESTINATION bin

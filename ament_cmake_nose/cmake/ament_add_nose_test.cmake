@@ -1,4 +1,4 @@
-# Copyright 2017 Open Source Robotics Foundation, Inc.
+# Copyright 2014-2015 Open Source Robotics Foundation, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,12 +13,12 @@
 # limitations under the License.
 
 #
-# Add a pytest test.
+# Add a nose test.
 #
 # :param testname: the name of the test
 # :type testname: string
-# :param path: the path to a file or folder where ``pytest`` should be invoked
-#   on
+# :param path: the path to a file or folder where ``nosetests``
+#   should be invoked on
 # :type path: string
 # :param SKIP_TEST: if set mark the test as being skipped
 # :type SKIP_TEST: option
@@ -30,8 +30,6 @@
 # :param TIMEOUT: the test timeout in seconds,
 #   default defined by ``ament_add_test()``
 # :type TIMEOUT: integer
-# :param WERROR: If ON, then treat warnings as errors. Default: OFF.
-# :type WERROR: bool
 # :param WORKING_DIRECTORY: the working directory for invoking the
 #   command in, default defined by ``ament_add_test()``
 # :type WORKING_DIRECTORY: string
@@ -46,18 +44,24 @@
 #
 # @public
 #
-function(ament_add_pytest_test testname path)
+macro(ament_add_nose_test testname path)
+  _ament_cmake_nose_find_nosetests()
+  if(NOSETESTS)
+    _ament_add_nose_test("${testname}" "${path}" ${ARGN})
+  endif()
+endmacro()
+
+function(_ament_add_nose_test testname path)
   cmake_parse_arguments(ARG
     "SKIP_TEST"
-    "PYTHON_EXECUTABLE;RUNNER;TIMEOUT;WERROR;WORKING_DIRECTORY"
+    "PYTHON_EXECUTABLE;RUNNER;TIMEOUT;WORKING_DIRECTORY"
     "APPEND_ENV;APPEND_LIBRARY_DIRS;ENV"
     ${ARGN})
   if(ARG_UNPARSED_ARGUMENTS)
-    message(FATAL_ERROR "ament_add_pytest_test() called with unused arguments: "
+    message(FATAL_ERROR "ament_add_nose_test() called with unused arguments: "
       "${ARG_UNPARSED_ARGUMENTS}")
   endif()
 
-  # check arguments
   if(NOT IS_ABSOLUTE "${path}")
     set(path "${CMAKE_CURRENT_SOURCE_DIR}/${path}")
   endif()
@@ -65,7 +69,7 @@ function(ament_add_pytest_test testname path)
   string(FIND "${path}" "$<" index)
   if(index EQUAL -1 AND NOT EXISTS "${path}")
     message(FATAL_ERROR
-      "ament_add_pytest_test() the path '${path}' does not exist")
+      "ament_add_nose_test() the path '${path}' does not exist")
   endif()
   if(NOT ARG_PYTHON_EXECUTABLE)
     set(ARG_PYTHON_EXECUTABLE Python3::Interpreter)
@@ -73,74 +77,26 @@ function(ament_add_pytest_test testname path)
 
   get_executable_path(python_interpreter "${ARG_PYTHON_EXECUTABLE}" BUILD)
 
-  # ensure pytest is available
-  ament_has_pytest(has_pytest QUIET PYTHON_EXECUTABLE "${ARG_PYTHON_EXECUTABLE}")
-  if(NOT has_pytest)
-    message(WARNING
-      "The Python module 'pytest' was not found, pytests cannot be run. "
-      "On Linux, install the 'python3-pytest' package. "
-      "On other platforms, install 'pytest' using pip.")
-    return()
-  endif()
-
   set(result_file "${AMENT_TEST_RESULTS_DIR}/${PROJECT_NAME}/${testname}.xunit.xml")
+  # Invoke ${NOSETESTS} explicitly with the ${PYTHON_EXECUTABLE} because on
+  # some systems, like OS X, the ${NOSETESTS} binary may have a #! which points
+  # to the Python2 on the system, rather than the Python3 which is what we want
+  # most of the time.
+  # This "misalignment" can occur when you do `pip install -U nose` after doing
+  # `pip3 install -U nose` because both install the `nose` binary.
+  # Basically the last Python system to install nose will determine what the
+  # ${NOSETESTS} executable references.
+  # See: https://github.com/ament/ament_cmake/pull/70
   set(cmd
     "${python_interpreter}"
     "-u"  # unbuffered stdout and stderr
-    "-m" "pytest"
-    "${path}"
-    # store last failed tests
-    "-o" "cache_dir=${CMAKE_CURRENT_BINARY_DIR}/ament_cmake_pytest/${testname}/.cache"
-    # junit arguments
-    "--junit-xml=${result_file}"
-    "--junit-prefix=${PROJECT_NAME}"
-  )
-
-  if(ARG_WERROR)
-    # treat warnings as errors
-    list(APPEND cmd "-We")
-  endif()
-
-  # enable pytest coverage by default if the package test_depends on python3-pytest-cov
-  if("python3-pytest-cov" IN_LIST ${PROJECT_NAME}_TEST_DEPENDS)
-    set(coverage_default ON)
-  else()
-    set(coverage_default OFF)
-  endif()
-  option(AMENT_CMAKE_PYTEST_WITH_COVERAGE
-    "Generate coverage information for Python tests"
-    ${coverage_default})
-
-  if(AMENT_CMAKE_PYTEST_WITH_COVERAGE)
-    # get pytest-cov version, if available
-    ament_get_pytest_cov_version(pytest_cov_version
-      PYTHON_EXECUTABLE "${ARG_PYTHON_EXECUTABLE}"
-    )
-    if(NOT pytest_cov_version)
-      message(WARNING
-        "The Python module 'pytest-cov' was not found, test coverage will not be produced. "
-        "On Linux, install the 'python3-pytest-cov' package. "
-        "On other platforms, install 'pytest-cov' using pip.")
-    else()
-      set(coverage_directory "${CMAKE_CURRENT_BINARY_DIR}/pytest_cov/${testname}")
-      file(MAKE_DIRECTORY "${coverage_directory}")
-
-      list(APPEND cmd
-        "--cov=${CMAKE_CURRENT_SOURCE_DIR}"
-        "--cov-report=html:${coverage_directory}/coverage.html"
-        "--cov-report=xml:${coverage_directory}/coverage.xml"
-      )
-
-      if(pytest_cov_version VERSION_LESS "2.5.0")
-        message(WARNING
-          "Test coverage will be produced, but will not contain branch coverage information, "
-          "because the pytest extension 'cov' does not support it "
-          "(need 2.5.0, found '${pytest_cov_version}').")
-      else()
-        list(APPEND cmd "--cov-branch")
-      endif()
-
-      list(APPEND ARG_ENV "COVERAGE_FILE=${coverage_directory}/.coverage")
+    "${NOSETESTS}" "${path}"
+    "--nocapture"  # stdout will be printed immediately
+    "--with-xunit" "--xunit-file=${result_file}")
+  if(NOT "${NOSETESTS_VERSION}" VERSION_LESS "1.3.5")
+    list(APPEND cmd "--xunit-testsuite-name=${PROJECT_NAME}.nosetests")
+    if(NOT "${NOSETESTS_VERSION}" VERSION_LESS "1.3.8")
+      list(APPEND cmd "--xunit-prefix-with-testsuite-name")
     endif()
   endif()
 
@@ -169,7 +125,7 @@ function(ament_add_pytest_test testname path)
   ament_add_test(
     "${testname}"
     COMMAND ${cmd}
-    OUTPUT_FILE "${CMAKE_BINARY_DIR}/ament_cmake_pytest/${testname}.txt"
+    OUTPUT_FILE "${CMAKE_BINARY_DIR}/ament_cmake_nose/${testname}.txt"
     RESULT_FILE "${result_file}"
     ${ARG_RUNNER}
     ${ARG_SKIP_TEST}
@@ -182,6 +138,6 @@ function(ament_add_pytest_test testname path)
   set_tests_properties(
     "${testname}"
     PROPERTIES
-    LABELS "pytest"
+    LABELS "nose"
   )
 endfunction()

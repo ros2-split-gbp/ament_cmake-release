@@ -2,48 +2,13 @@
 Changelog for package ament_cmake_core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.0.2 (2023-04-12)
+1.3.4 (2023-04-25)
 ------------------
 
-2.0.1 (2023-04-11)
+1.3.3 (2022-11-07)
 ------------------
 
-2.0.0 (2023-04-11)
-------------------
-* ament_cmake_uninstall_target: Correct location of install_manifest.txt (`#432 <https://github.com/ament/ament_cmake/issues/432>`_)
-* Contributors: Silvio Traversaro
-
-1.5.3 (2023-02-13)
-------------------
-* Use file(GENERATE OUTPUT) to create dsv files (`#416 <https://github.com/ament/ament_cmake/issues/416>`_)
-  Using file(WRITE) and file(APPEND) causes the modification stamp of the
-  file to be changed each time CMake configures, resluting in an
-  'Installing' message rather than an 'Up-to-date' message even though the
-  file content is identical.
-  Using file(GENERATE OUTPUT) updates the timestamp of the file only if
-  the content changes.
-* Warn when trying to symlink install an INTERFACE_LIBRARY (`#417 <https://github.com/ament/ament_cmake/issues/417>`_)
-* Workaround to exclude Clion's cmake folders from colcon test (`#410 <https://github.com/ament/ament_cmake/issues/410>`_)
-  - Add AMENT_IGNORE to CMAKE_BINARY_DIR to avoid picking up cmake
-  specific folders created by CLion in `colcon build` and `colcon test`
-  commands
-* if (NOT ${UNDEFINED_VAR}) gets evaluated to false, so change to if (NOT UNDEFINED_VAR) so it evaluates to true. (`#407 <https://github.com/ament/ament_cmake/issues/407>`_)
-* [rolling] Update maintainers - 2022-11-07 (`#411 <https://github.com/ament/ament_cmake/issues/411>`_)
-  * Update maintainers to Michael Jeronimo
-* Contributors: Audrow Nash, Kenji Brameld, Michael Orlov, Scott K Logan, Shane Loretz
-
-1.5.2 (2022-11-02)
-------------------
-
-1.5.1 (2022-09-13)
-------------------
-
-1.5.0 (2022-07-11)
-------------------
-* Implement ament_add_default_options (`#390 <https://github.com/ament/ament_cmake/issues/390>`_)
-* Contributors: methylDragon
-
-1.4.0 (2022-04-29)
+1.3.2 (2022-05-17)
 ------------------
 
 1.3.1 (2022-03-28)

@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(ament_cmake_pytest NONE)
+project(ament_cmake_nose NONE)
 
 find_package(ament_cmake_core REQUIRED)
 
 ament_package(
-  CONFIG_EXTRAS "ament_cmake_pytest-extras.cmake"
+  CONFIG_EXTRAS "ament_cmake_nose-extras.cmake"
 )
 
 install(

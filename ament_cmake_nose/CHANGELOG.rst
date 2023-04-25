@@ -1,6 +1,6 @@
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Changelog for package ament_cmake_gtest
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package ament_cmake_nose
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1.3.4 (2023-04-25)
 ------------------
@@ -27,6 +27,7 @@ Changelog for package ament_cmake_gtest
 1.2.0 (2021-10-29)
 ------------------
 * Use FindPython3 instead of FindPythonInterp (`#355 <https://github.com/ament/ament_cmake/issues/355>`_)
+* Support commands with executable targets (`#352 <https://github.com/ament/ament_cmake/issues/352>`_)
 * Update maintainers (`#336 <https://github.com/ament/ament_cmake/issues/336>`_)
 * Contributors: Chris Lalancette, Shane Loretz
 
@@ -47,9 +48,6 @@ Changelog for package ament_cmake_gtest
 
 1.0.4 (2021-01-25)
 ------------------
-* Disable gtest warning when building in Release (`#298 <https://github.com/ament/ament_cmake/issues/298>`_)
-  https://github.com/google/googletest/issues/1303
-* Contributors: Victor Lopez
 
 1.0.3 (2020-12-10)
 ------------------
@@ -61,10 +59,6 @@ Changelog for package ament_cmake_gtest
 
 1.0.1 (2020-09-10)
 ------------------
-* [ament_cmake_gtest] ensure gtest to consume the correct headers. (`#267 <https://github.com/ament/ament_cmake/issues/267>`_)
-  * ensure gtest to consume the correct headers.
-  * add another patch.
-* Contributors: Sean Yen
 
 1.0.0 (2020-07-22)
 ------------------
@@ -95,24 +89,10 @@ Changelog for package ament_cmake_gtest
 
 0.8.0 (2019-10-04)
 ------------------
-* Revert "Add gtest and gmock headers as system headers: (`#175 <https://github.com/ament/ament_cmake/issues/175>`_)" (`#184 <https://github.com/ament/ament_cmake/issues/184>`_)
-  This reverts commit e1ff1c1a0a1e08d43e939cdb943a88be601808bd.
-* Add gtest and gmock headers as system headers: (`#175 <https://github.com/ament/ament_cmake/issues/175>`_)
-  Certain gtest and gmock header files contain constructs
-  which generate warnings when certain compile flags are
-  enabled. By including the header files as system headers,
-  the compiler knows that it doesn't need to generate these
-  warnings since they are coming from (third-party) system
-  headers
-* Add runner option to ament_add_test (`#174 <https://github.com/ament/ament_cmake/issues/174>`_)
-  * ament_cmake allow speficiation of a different test runner
-  - By default, still uses run_test.py
-  - Example use case: ament_cmake_ros can use a test runner that sets a ROS_DOMAIN_ID
-  * ament_cmake move run_test.py to a python module
-  - This should let us see the history
-  * ament_cmake refactor run_test.py into an importable python module
-  - Adds an ament_cmake_test python package
-* Contributors: Peter Baughman, Shane Loretz, jpsamper2009
+* Add 'runner' option to ament_add_gmock / nose (`#177 <https://github.com/ament/ament_cmake/issues/177>`_)
+  * Add 'runner' option to ament_add_gmock
+  * Give ament_add_nose ability to specify a different runner, too
+* Contributors: Peter Baughman
 
 0.7.3 (2019-05-29)
 ------------------
@@ -143,72 +123,73 @@ Changelog for package ament_cmake_gtest
 0.4.0 (2017-12-08)
 ------------------
 * 0.0.3
-* Merge pull request `#104 <https://github.com/ament/ament_cmake/issues/104>`_ from ament/googletest
-  update to googletest 1.8
-* update to googletest 1.8
+* Merge pull request `#103 <https://github.com/ament/ament_cmake/issues/103>`_ from ament/resolve_some_todos
+  Resolve some todos
+* remove obsolete todos
+* Get nose tests to immediately print console output (`#98 <https://github.com/ament/ament_cmake/issues/98>`_)
+  This is useful for tests that timeout and get killed without an opportunity to print the console output that was captured
 * 0.0.2
+* Use python3-nose rosdep key. (`#95 <https://github.com/ament/ament_cmake/issues/95>`_)
 * Merge pull request `#86 <https://github.com/ament/ament_cmake/issues/86>`_ from ament/remove_include
   remove unnecessary include
 * remove unnecessary include
 * Merge pull request `#85 <https://github.com/ament/ament_cmake/issues/85>`_ from ament/split_gtest_function
   Split ament_add_gtest function
-* refactor ament_add_gtest to be composed out of two separate functions to create the executable and register it as a test
-* duplicate ament_add_gtest.cmake before refactoring it
-* add missing doc for SKIP_TEST
-* Merge pull request `#82 <https://github.com/ament/ament_cmake/issues/82>`_ from firesurfer/master
-  Fixed rebasing error, fixed indentation, looking for pthread on non w…
-* removed GTEST argument form target_link_libraries
-* Fixed rebasing error, fixed indentation, looking for pthread on non windows systems
+* add doc for SKIP_TEST
 * Skipped tests (`#80 <https://github.com/ament/ament_cmake/issues/80>`_)
   * support skipping tests
   * add SKIP_TEST to ament_add_nose_test
   * use keyword args not positional
   * discard positional args after first
+* remove trailing whitespace
 * update schema url
 * add schema to manifest files
+* Windows python debug (`#73 <https://github.com/ament/ament_cmake/issues/73>`_)
+  * add python interpreter to nose test parameters
+  * update doc
+  * rename interpreter to executable and add doc
 * Merge pull request `#72 <https://github.com/ament/ament_cmake/issues/72>`_ from ament/cmake35
   require CMake 3.5
 * remove trailing spaces from comparisons, obsolete quotes and explicit variable expansion
-* remove obsolete policies
 * require CMake 3.5
+* run nosetests with the python executable (`#70 <https://github.com/ament/ament_cmake/issues/70>`_)
+  * run nosetests with the python executable
+  * comment to describe the source of the issue
+  * fixup
+* Merge pull request `#55 <https://github.com/ament/ament_cmake/issues/55>`_ from ament/generator_expression
+  allow tests with generator expression in the path
+* allow tests with generator expression in the path
 * Merge pull request `#54 <https://github.com/ament/ament_cmake/issues/54>`_ from ament/test_working_dir
   support WORKING_DIRECTORY in ament_add_nose_test
-* fix WORKING_DIRECTORY for ament_add_gtest/gmock
+* add WORKING_DIRECTORY to ament_add_nose_test
 * follow fixes from `#52 <https://github.com/ament/ament_cmake/issues/52>`_
 * Merge pull request `#52 <https://github.com/ament/ament_cmake/issues/52>`_ from ament/add_test_append_env_option
   add APPEND_ENV and APPEND_LIBRARY_DIRS options to ament_add\_*test macros
 * add APPEND_ENV and APPEND_LIBRARY_DIRS options to ament_add\_*test macros
-* Merge pull request `#50 <https://github.com/ament/ament_cmake/issues/50>`_ from ament/pass_extra_env_to_tests
-  add option to pass extra env to ament_add\_*test
-* addressing comments
-* add option to pass extra env to ament_add\_*test
+* Merge pull request `#46 <https://github.com/ament/ament_cmake/issues/46>`_ from ament/nosetest_prefix_testsuite
+  use --xunit-prefix-with-testsuite-name option of upcoming nosetests version
+* use --xunit-prefix-with-testsuite-name option of upcoming nosetests version
+* Merge pull request `#43 <https://github.com/ament/ament_cmake/issues/43>`_ from ament/fix_build_with_spaces
+  invoke nosetest through Python executable
+* invoke nosetest through Python executable
 * Merge pull request `#37 <https://github.com/ament/ament_cmake/issues/37>`_ from ament/test_labels
   add labels to tests
 * add labels to tests
-* Merge pull request `#34 <https://github.com/ament/ament_cmake/issues/34>`_ from ament/prevent_gtest_in_cache
-  refactor finding GTest / GMock
-* refactor finding GTest / GMock
-* Merge pull request `#29 <https://github.com/ament/ament_cmake/issues/29>`_ from ament/suppress_cmp0026
-  set cmp0026 to OLD until we can migrate to use $<TARGET_FILE:...>
-* update comment and set the policy in two other places
+* Merge pull request `#36 <https://github.com/ament/ament_cmake/issues/36>`_ from ament/version_less_cmake
+  Use VERSION_LESS to test the Nose version
+* Use VERSION_LESS to test the Nose version
+  `VERSION_LESS` is used for checking versions:
+  http://cmake.org/cmake/help/v2.8.12/cmake.html#command:if
+* Merge pull request `#33 <https://github.com/ament/ament_cmake/issues/33>`_ from ament/nosetest_version
+  determine nosetest version in CMake and use --xunit-testsuite-name when available
+* determine nosetest version in CMake and use --xunit-testsuite-name when available
 * Merge pull request `#28 <https://github.com/ament/ament_cmake/issues/28>`_ from ament/gtest_location
   fix location of gtest / gmock executables on Windows
 * add type as extension to test result files
-* fix location of gtest executable on Windows
-* Merge pull request `#25 <https://github.com/ament/ament_cmake/issues/25>`_ from ament/use_gmock_vendor
-  optionally use gmock_vendor
-* optionally use gtest/gmock_vendor
-* Merge pull request `#18 <https://github.com/ament/ament_cmake/issues/18>`_ from ament/gtest_docs
-  adding basic usage to description
-* adding basic usage documentation
+* fix name of nosetests output file
 * Merge pull request `#19 <https://github.com/ament/ament_cmake/issues/19>`_ from ament/improve_test_runner
   improve test runner
 * improve test runner
-* add note that gtest target might not be created
-* fix linking of gtest libraries (regression of `#16 <https://github.com/ament/ament_cmake/issues/16>`_)
-* Merge pull request `#16 <https://github.com/ament/ament_cmake/issues/16>`_ from ament/gtest_main_libraries
-  automatically link gtest main libraries and add an option to skip it
-* automatically link gtest main libraries and add an option to skip it
 * add explicit build type
 * disable debug output
 * add missing copyright / license information, update format of existing license information
@@ -218,8 +199,6 @@ Changelog for package ament_cmake_gtest
 * invert dependency between ament_cmake_environment and ament_cmake_environment_hooks, add dependency on ament_cmake_environment
 * deal with CMake double expansion
 * update cmake code style
-* add ament_cmake_gmock
 * add ament_cmake_environment_hooks
-* tests are always built when being enabled
 * add ament_cmake_test, ament_cmake_gtest, ament_cmake_nose
-* Contributors: Dirk Thomas, Lennart Nachtigall, Mikael Arguedas, Tully Foote, William Woodall
+* Contributors: Dirk Thomas, Esteve Fernandez, Mikael Arguedas, Steven! Ragnarök, William Woodall, dhood
