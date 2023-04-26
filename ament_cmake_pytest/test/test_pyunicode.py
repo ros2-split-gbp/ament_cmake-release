@@ -1,4 +1,4 @@
-# Copyright 2014 Open Source Robotics Foundation, Inc.
+# Copyright 2023 Open Source Robotics Foundation, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,19 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#
-# Find nosetests.
-#
-# Set the variable ``NOSETESTS`` to the absolute path of the
-# executable if found.
-#
-# @public
-#
-macro(ament_find_nose)
-  set(_ARGN "${ARGN}")
-  if(_ARGN)
-    message(FATAL_ERROR
-      "ament_find_nose() called with unused arguments: ${_ARGN}")
-  endif()
-  _ament_cmake_nose_find_nosetests()
-endmacro()
+import sys
+
+def test_print_unicode():
+    '''
+    Print a non UTF-8 byte sequence in a test to verify stderr parsing.
+    This value was originally reported in: https://github.com/colcon/colcon-core/issues/468
+   '''
+    sys.stderr.buffer.write(b'val: ')
+    sys.stderr.buffer.write(b'\xff\x00\xa1')
+    sys.stderr.buffer.write(b'\n')
